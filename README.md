@@ -10,7 +10,7 @@ The helps to keep track of trees planted and connects the local tree sellers to 
 
 
 ## tree detail page visualisation low level
-<img src='TREE DETAIL.png'>
+<img src='TREE DETAILS.png'>
 
 
 ## events and sponsor page page visualisation low level
