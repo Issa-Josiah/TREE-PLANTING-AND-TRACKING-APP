@@ -1,0 +1,110 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 0;
+}
+.hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+.card.custom-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card.custom-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.btn-custom {
+    border-radius: 50px;
+    padding: 0.6rem 1.4rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+
+}
+.btn-custom:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.alert {
+    margin-top: 1rem;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+table.table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p.lead {
+        font-size: 1rem;
+    }
+
+    .card.custom-card {
+        padding: 1rem !important;
+    }
+
+    .btn-custom {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .features .card h4 {
+        font-size: 1rem;
+    }
+
+    .features .card p {
+        font-size: 0.9rem;
+    }
+}
+
+
+footer {
+    font-size: 0.9rem;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}

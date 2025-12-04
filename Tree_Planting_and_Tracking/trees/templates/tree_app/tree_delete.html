@@ -1,0 +1,16 @@
+{% extends 'home.html' %}
+
+{% block title %}Delete {{ tree.name }}{% endblock %}
+
+{% block content %}
+<div class="card custom-card p-4" style="max-width: 500px; margin: auto;">
+    <h2>Delete Tree</h2>
+    <p>Are you sure you want to delete the tree: <strong>{{ tree.name }}</strong>?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'tree_detail' tree.id %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'home.html' %}
+{% block title %}Delete Event{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card custom-card p-4 mx-auto" style="max-width:500px;">
+        <h2 class="mb-3">Delete Event</h2>
+        <p>Are you sure you want to delete <strong>{{ event.title }}</strong>?</p>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-custom w-100">Yes, Delete</button>
+            <a href="{% url 'event_list' %}" class="btn btn-secondary btn-custom w-100 mt-2">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

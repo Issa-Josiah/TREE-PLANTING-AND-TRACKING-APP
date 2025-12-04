@@ -1,0 +1,24 @@
+{% extends 'home.html' %}
+
+{% block title %}{{ tree.name }}{% endblock %}
+
+{% block content %}
+<div class="card custom-card p-4 mb-4">
+    <img src="{{ tree.image.url }}" class="card-img-top rounded mb-3" alt="{{ tree.name }}">
+    <h2>{{ tree.name }}</h2>
+    <p>{{ tree.description }}</p>
+    <p><strong>Location:</strong> {{ tree.location }}</p>
+    <p><strong>Price:</strong> {% if tree.price %}KES {{ tree.price }}{% else %}-{% endif %}</p>
+
+    <div class="d-flex gap-2">
+        {% if user == tree.owner %}
+            <a href="{% url 'edit_tree' tree.id %}" class="btn btn-primary btn-custom">Edit</a>
+            <a href="{% url 'delete_tree' tree.id %}" class="btn btn-danger btn-custom">Delete</a>
+        {% endif %}
+        {% if user.is_staff %}
+            <a href="{% url 'admin_edit_tree' tree.id %}" class="btn btn-warning btn-custom">Admin Edit</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

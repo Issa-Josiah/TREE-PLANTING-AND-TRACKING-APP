@@ -4,5 +4,21 @@ from . import views
 urlpatterns = [
     path('', views.tree_list, name='tree_list'),
     path('add/', views.add_tree, name='add_tree'),
-    path('my-tree_app/', views.my_trees, name='my_trees'),
+    path('my-trees', views.my_trees, name='my_trees'),
+
+    # tree detail
+    path('tree/<int:id>/', views.tree_detail, name='tree_detail'),
+
+#     edit tree
+path('tree/<int:id>/edit/', views.edit_tree, name='edit_tree'),
+#     deleting a tree
+path('tree/<int:id>/delete/', views.delete_tree, name='delete_tree'),
+
+# admin price
+path('tree/<int:id>/admin-edit/', views.admin_edit_tree, name='admin_edit_tree'),
+
+# admin dashboard
+path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
+
+
 ]

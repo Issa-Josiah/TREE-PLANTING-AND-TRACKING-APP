@@ -1,0 +1,17 @@
+{% extends 'home.html' %}
+
+{% block title %}Admin Edit {{ tree.name }}{% endblock %}
+
+{% block content %}
+<div class="card custom-card p-4" style="max-width: 600px; margin: auto;">
+    <h2>Admin Edit: {{ tree.name }}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button class="btn btn-success" type="submit">Update Price/Payment</button>
+        <a href="{% url 'tree_detail' tree.id %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

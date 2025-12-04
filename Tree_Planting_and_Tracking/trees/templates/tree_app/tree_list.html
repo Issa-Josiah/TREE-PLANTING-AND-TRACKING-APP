@@ -5,27 +5,24 @@
 {% block content %}
 <h2 class="mb-4">All Trees</h2>
 
-<div class="row">
+<div class="row g-4">
     {% for tree in trees %}
     <div class="col-md-4">
-        <div class="card custom-card p-3 mb-3">
-
-            <h4>{{ tree.name }}</h4>
-            <p>{{ tree.description }}</p>
-            <p><strong>Location:</strong> {{ tree.location }}</p>
-
-            {% if tree.image %}
-                <img src="{{ tree.image.url }}" class="img-fluid rounded">
-            {% endif %}
-
-            <p><strong>Added by:</strong> {{ tree.owner.username }}</p>
-
-            {% if tree.price %}
-                <p><strong>Price:</strong> KES {{ tree.price }}</p>
-            {% endif %}
+        <div class="card custom-card p-3 h-100">
+            <img src="{{ tree.image.url }}" class="card-img-top rounded" alt="{{ tree.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ tree.name }}</h5>
+                <p class="card-text">{{ tree.description|truncatechars:80 }}</p>
+                <p><strong>Location:</strong> {{ tree.location }}</p>
+                <p><strong>Price:</strong> {% if tree.price %}KES {{ tree.price }}{% else %}Not set{% endif %}</p>
+                <a href="{% url 'tree_detail' tree.id %}" class="btn btn-primary btn-custom">View</a>
+            </div>
         </div>
     </div>
+    {% empty %}
+    <p>No trees available yet.</p>
     {% endfor %}
 </div>
+
 
 {% endblock %}
