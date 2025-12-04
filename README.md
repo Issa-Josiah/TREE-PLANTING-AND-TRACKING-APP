@@ -28,5 +28,10 @@ The helps to keep track of trees planted and connects the local tree sellers to 
 ## registration page visualisation low level
 <img src='registration.png'>
 
-
+packages to install
+1. django
+2. pillow
+3. environment
+4. python
+5. 
 
