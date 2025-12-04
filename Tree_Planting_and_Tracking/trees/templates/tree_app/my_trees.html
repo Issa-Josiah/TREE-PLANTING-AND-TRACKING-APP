@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+
+{% block title %}My Trees{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">My Trees</h2>
+
+<div class="row">
+    {% for tree in trees %}
+    <div class="col-md-4">
+        <div class="card mb-3 custom-card p-3">
+            <h4>{{ tree.name }}</h4>
+            <p>{{ tree.description }}</p>
+            <p><strong>Location:</strong> {{ tree.location }}</p>
+
+            {% if tree.image %}
+                <img src="{{ tree.image.url }}" class="img-fluid rounded">
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if trees|length == 0 %}
+<p>You haven't added any trees yet.</p>
+{% endif %}
+{% endblock %}
