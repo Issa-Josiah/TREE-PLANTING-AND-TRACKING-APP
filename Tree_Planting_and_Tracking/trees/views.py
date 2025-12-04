@@ -100,7 +100,7 @@ def admin_edit_tree(request, id):
 # admin dashboard
 
 @staff_member_required
-def admin_dashboard(request):
+def admina_dashboard(request):
     users = User.objects.all()
     trees = Tree.objects.all()
     return render(request, 'tree_app/admin_dashboard.html', {'users': users, 'trees': trees})
