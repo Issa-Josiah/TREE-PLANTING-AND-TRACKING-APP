@@ -18,7 +18,7 @@ path('tree/<int:id>/delete/', views.delete_tree, name='delete_tree'),
 path('tree/<int:id>/admin-edit/', views.admin_edit_tree, name='admin_edit_tree'),
 
 # admin dashboard
-path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
+path('admin/dashboard/', views.admina_dashboard, name='admina_dashboard'),
 
 
 ]
