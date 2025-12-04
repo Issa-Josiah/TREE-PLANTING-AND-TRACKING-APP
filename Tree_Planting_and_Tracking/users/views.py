@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 
 
+
+
 def register_user(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -13,7 +15,7 @@ def register_user(request):
         user.save()
         return redirect('login')
 
-    return render(request, 'user/register.html')
+    return render(request, 'accounts/register.html')
 
 
 def login_user(request):

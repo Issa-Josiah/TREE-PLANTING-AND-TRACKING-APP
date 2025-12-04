@@ -1,0 +1,65 @@
+{% extends 'home.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 text-center">Admin Dashboard</h2>
+    <div class="row">
+        <!-- Users Panel -->
+        <div class="col-md-6">
+            <div class="card custom-card p-3 mb-4">
+                <h3>Users ({{ users|length }})</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Staff</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.is_staff }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Trees Panel -->
+        <div class="col-md-6">
+            <div class="card custom-card p-3 mb-4">
+                <h3>Trees ({{ trees|length }})</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Owner</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tree in trees %}
+                        <tr>
+                            <td>{{ tree.name }}</td>
+                            <td>{{ tree.owner.username }}</td>
+                            <td>{% if tree.price %}KES {{ tree.price }}{% else %}-{% endif %}</td>
+                            <td>
+                                <a href="{% url 'admin_edit_tree' tree.id %}" class="btn btn-warning btn-custom btn-sm">Edit</a>
+                                <a href="{% url 'tree_detail' tree.id %}" class="btn btn-primary btn-custom btn-sm">View</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
