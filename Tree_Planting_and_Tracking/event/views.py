@@ -3,6 +3,10 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import Event
 from .forms import EventForm
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+
+
 
 def event_list(request):
     events = Event.objects.all().order_by('date')
@@ -50,3 +54,9 @@ def delete_event(request, id):
         return redirect('event_list')
     context =  {'event': event}
     return render(request, 'event/delete_event.html', context)
+
+@login_required
+def event_payment(request, id):
+    event = get_object_or_404(Event, id=id)
+    context =  {'event': event}
+    return render(request, 'event/event_payment.html',context)

@@ -1,0 +1,57 @@
+{% extends 'home.html' %}
+{% load static %}
+<!-- Background Carousel -->
+
+{% block content %}
+<div id="bgCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
+    <div class="carousel-inner">
+
+        {% for img in carousel_images %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{% static 'images/logo.png' %}" class="bg-image" alt="background">
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h2>Welcome{% if user.is_authenticated %}, {{ user.username }}{% endif %}!</h2>
+    <p>Total Trees Planted on the Site: {{ total_trees }}</p>
+
+    {% if user.is_authenticated %}
+    <p>Your Trees: {{ user_total }}</p>
+    <a href="{% url 'add_tree' %}" class="btn btn-success mb-3">Add New Tree</a>
+    {% else %}
+    <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a> to plant your own trees!</p>
+    {% endif %}
+
+    <h4>All Trees:</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Owner</th>
+                <th>Price</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tree in trees %}
+            <tr>
+                <td>{{ tree.name }}</td>
+                <td>{{ tree.owner.username }}</td>
+                <td>{{ tree.price }}</td>
+                <td>
+                    <a href="{% url 'tree_detail' tree.id %}" class="btn btn-primary btn-sm">View</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No trees have been added yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

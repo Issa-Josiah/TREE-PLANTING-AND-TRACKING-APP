@@ -9,6 +9,7 @@
     <p>{{ tree.description }}</p>
     <p><strong>Location:</strong> {{ tree.location }}</p>
     <p><strong>Price:</strong> {% if tree.price %}KES {{ tree.price }}{% else %}-{% endif %}</p>
+    <p><strong>Pay</strong> {% url 'payment' %}</p>
 
     <div class="d-flex gap-2">
         {% if user == tree.owner %}
