@@ -7,6 +7,9 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from .models import Tree
 from .forms import TreeForm
+from .forms import TreeAdminForm
+from .models import Sponsor
+from event.models import Event
 
 
 # normal page
@@ -14,9 +17,24 @@ def dashboard(request):
     trees = Tree.objects.all()  # show all trees
     total_trees = trees.count()
 
+
+    # User-specific tree count
+    user_total = 0
+    if request.user.is_authenticated:
+        user_total = Tree.objects.filter(owner=request.user).count() if request.user.is_authenticated else 0
+
+        # Upcoming events (ordered by date)
+        events = Event.objects.order_by('date')[:4]
+
+        # Sponsors
+        sponsors = Sponsor.objects.all()
+
     context = {
         'trees': trees,
         'total_trees': total_trees,
+        'user_total': user_total,
+        'events': events,
+        'sponsors': sponsors,
     }
 
     if request.user.is_authenticated:

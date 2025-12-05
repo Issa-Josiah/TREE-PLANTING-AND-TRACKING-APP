@@ -1,57 +1,264 @@
 {% extends 'home.html' %}
 {% load static %}
-<!-- Background Carousel -->
+
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<div id="bgCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
-    <div class="carousel-inner">
+<!-- ===== Tree Carousel ===== -->
+<!-- ===== Tree Carousel ===== -->
+<div id="treeCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000" style="height:75vh;">
+    <div class="carousel-inner h-100">
+        {% for tree in trees %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %} h-100">
+            <!-- Tree Image -->
+            <img src="{{ tree.image.url }}" class="d-block w-100 h-100" style="object-fit:cover;" alt="{{ tree.name }}">
 
-        {% for img in carousel_images %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{% static 'images/logo.png' %}" class="bg-image" alt="background">
+            <!-- Caption Overlay -->
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3 shadow">
+                <h3 class="fw-bold">{{ tree.name }}</h3>
+                <p class="fs-6">{{ tree.description|truncatewords:25 }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <div class="carousel-item active h-100">
+            <img src="{% static 'images/default_tree.jpg' %}" class="d-block w-100 h-100" style="object-fit:cover;" alt="No Trees">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3 shadow">
+                <h3 class="fw-bold">No Trees Yet</h3>
+                <p class="fs-6">Start planting to see your trees appear here!</p>
+            </div>
         </div>
         {% endfor %}
+    </div>
+
+    <!-- Optional Navigation Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#treeCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#treeCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<!-- ===== Welcome Section ===== -->
+
+<div class="container mt-5">
+    <div class="p-5 bg-success bg-opacity-10 rounded-4 shadow-lg text-center position-relative overflow-hidden
+                animate__animated animate__fadeIn animate__slow">
+
+        <!-- Decorative Leaf Icons -->
+        <div class="position-absolute top-50 start-0 translate-middle-y opacity-25"
+             style="font-size: 5rem; transform: rotate(-20deg);">
+            🌿
+        </div>
+        <div class="position-absolute top-50 end-0 translate-middle-y opacity-25"
+             style="font-size: 5rem; transform: rotate(20deg);">
+            🌿
+        </div>
+
+        <!-- Welcome Text -->
+        <h2 class="fw-bold text-success display-4 mb-3 animate__animated animate__fadeInDown animate__delay-1s">
+            🌱 Welcome{% if user.is_authenticated %}, {{ user.username }}{% endif %}!
+        </h2>
+
+        <!-- Stats -->
+        <p class="fs-5 mb-2 animate__animated animate__fadeIn animate__delay-2s">
+            Total Trees Planted: <strong>{{ total_trees }}</strong>
+        </p>
+        {% if user.is_authenticated %}
+        <p class="fs-5 mb-4 animate__animated animate__fadeIn animate__delay-3s">
+            Your Trees: <strong>{{ user_total }}</strong>
+        </p>
+
+        <!-- Add Tree Button -->
+        <a href="{% url 'add_tree' %}" class="btn btn-success btn-lg rounded-pill shadow px-4 py-2 fs-5 animate__animated animate__zoomIn animate__delay-4s">
+            🌿 Add New Tree
+        </a>
+        {% else %}
+        <!-- Login/Register Buttons -->
+        <p class="fs-6 mt-3 animate__animated animate__fadeIn animate__delay-3s">
+            <a href="{% url 'login' %}" class="btn btn-primary btn-sm me-2 px-4">Login</a>
+            or
+            <a href="{% url 'register' %}" class="btn btn-secondary btn-sm ms-2 px-4">Register</a>
+            to plant your own trees!
+        </p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- ===== Events Sneak Peek ===== -->
+
+<div class="container mt-5">
+    <h3 class="text-center fw-bold mb-4 text-success">Upcoming Events</h3>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for event in events|slice:":4" %}
+        <div class="col">
+            <div class="card h-100 shadow-sm border-success rounded-4">
+                <img src="{{ event.image.url }}" class="card-img-top rounded-top-4" alt="{{ event.title }}">
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold text-success">{{ event.title }}</h5>
+                    <p class="card-text">{{ event.description|truncatewords:15 }}</p>
+                    <p class="text-info"><strong>Date:</strong> {{ event.date }}</p>
+                    <a href="{% url 'event_payment' event.id %}" class="btn btn-success btn-sm rounded-pill px-3">Attend</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No events yet.</p>
+        {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'event_list' %}" class="btn btn-primary btn-lg rounded-pill px-4">View All Events</a>
+    </div>
+</div>
+
+<!-- ===== Mission & Vision ===== -->
+<div class="container mt-5">
+    <div class="row g-4 text-center">
+
+        <!-- Mission Card -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg h-100 bg-success bg-opacity-10 mission-vision-card animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <div class="mb-3 animate__animated animate__bounceIn">
+                        <i class="bi bi-tree-fill text-success fs-1"></i>
+                    </div>
+                    <h4 class="card-title fw-bold text-success">Our Mission</h4>
+                    <p class="card-text fs-5">
+                        To increase the Earth's vegetation through tree planting and environmental awareness.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vision Card -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg h-100 bg-success bg-opacity-10 mission-vision-card animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <div class="mb-3 animate__animated animate__bounceIn">
+                        <i class="bi bi-globe2 text-success fs-1"></i>
+                    </div>
+                    <h4 class="card-title fw-bold text-success">Our Vision</h4>
+                    <p class="card-text fs-5">
+                        Making the world green and sustainable for future generations.
+                    </p>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
 
+<!-- ===== Benefits Section ===== -->
+<!-- ===== Benefits Section with Icon Hover Animation ===== -->
+<style>
+    .benefit-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .benefit-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+    }
+
+    /* Icon hover animation */
+    .benefit-card i {
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .benefit-card:hover i {
+        transform: scale(1.2) translateY(-5px);
+        color: #fff3cd; /* subtle highlight */
+    }
+</style>
+
 <div class="container mt-5">
-    <h2>Welcome{% if user.is_authenticated %}, {{ user.username }}{% endif %}!</h2>
-    <p>Total Trees Planted on the Site: {{ total_trees }}</p>
+    <h3 class="text-center mb-5 fw-bold" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:2rem;">
+        Benefits of Planting and Tracking
+    </h3>
+    <div class="row justify-content-center g-4">
 
-    {% if user.is_authenticated %}
-    <p>Your Trees: {{ user_total }}</p>
-    <a href="{% url 'add_tree' %}" class="btn btn-success mb-3">Add New Tree</a>
-    {% else %}
-    <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a> to plant your own trees!</p>
-    {% endif %}
+        <div class="col-12 col-md-6">
+            <div class="p-4 bg-success text-white rounded shadow-lg text-center h-100 benefit-card">
+                <i class="bi bi-tree fs-1 mb-3"></i>
+                <h5 class="fw-bold mb-3" style="font-size:1.5rem;">Environmental Impact</h5>
+                <p class="fs-5">Reduce carbon footprint and improve air quality.</p>
+            </div>
+        </div>
 
-    <h4>All Trees:</h4>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Owner</th>
-                <th>Price</th>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for tree in trees %}
-            <tr>
-                <td>{{ tree.name }}</td>
-                <td>{{ tree.owner.username }}</td>
-                <td>{{ tree.price }}</td>
-                <td>
-                    <a href="{% url 'tree_detail' tree.id %}" class="btn btn-primary btn-sm">View</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4">No trees have been added yet.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <div class="col-12 col-md-6">
+            <div class="p-4 bg-success text-white rounded shadow-lg text-center h-100 benefit-card">
+                <i class="bi bi-people fs-1 mb-3"></i>
+                <h5 class="fw-bold mb-3" style="font-size:1.5rem;">Community Engagement</h5>
+                <p class="fs-5">Encourage community participation and awareness.</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="p-4 bg-success text-white rounded shadow-lg text-center h-100 benefit-card">
+                <i class="bi bi-graph-up fs-1 mb-3"></i>
+                <h5 class="fw-bold mb-3" style="font-size:1.5rem;">Track Growth</h5>
+                <p class="fs-5">Monitor tree growth and maintain sustainability goals.</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="p-4 bg-success text-white rounded shadow-lg text-center h-100 benefit-card">
+                <i class="bi bi-bird fs-1 mb-3"></i>
+                <h5 class="fw-bold mb-3" style="font-size:1.5rem;">Wildlife Support</h5>
+                <p class="fs-5">Provide habitats for birds, insects, and other wildlife.</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="p-4 bg-success text-white rounded shadow-lg text-center h-100 benefit-card">
+                <i class="bi bi-droplet fs-1 mb-3"></i>
+                <h5 class="fw-bold mb-3" style="font-size:1.5rem;">Soil Protection</h5>
+                <p class="fs-5">Prevent soil erosion and maintain soil fertility.</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="p-4 bg-success text-white rounded shadow-lg text-center h-100 benefit-card">
+                <i class="bi bi-heart fs-1 mb-3"></i>
+                <h5 class="fw-bold mb-3" style="font-size:1.5rem;">Mental Wellbeing</h5>
+                <p class="fs-5">Enhance mental health and promote relaxation through green spaces.</p>
+            </div>
+        </div>
+
+    </div>
 </div>
+
+
+<!-- ===== Sponsors Carousel ===== -->
+<div class="container mt-5 mb-5">
+    <h5 class="text-center mb-3">Our Sponsors</h5>
+    <div id="sponsorCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+        <div class="carousel-inner text-center">
+            {% for sponsor in sponsors %}
+                {% if forloop.first or forloop.counter0|divisibleby:3 %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <div class="d-flex justify-content-center align-items-center gap-4">
+                {% endif %}
+
+                <img src="{{ sponsor.logo.url }}" style="height:100px;" alt="{{ sponsor.name }}">
+
+                {% if forloop.counter|divisibleby:3 or forloop.last %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <!-- Carousel controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#sponsorCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#sponsorCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+
 {% endblock %}
