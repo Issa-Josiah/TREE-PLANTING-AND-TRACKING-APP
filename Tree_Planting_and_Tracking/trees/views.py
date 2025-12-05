@@ -33,8 +33,8 @@ def dashboard(request):
         'trees': trees,
         'total_trees': total_trees,
         'user_total': user_total,
-        'events': events,
-        'sponsors': sponsors,
+        'events': Event,
+        'sponsors': Sponsor,
     }
 
     if request.user.is_authenticated:
@@ -56,15 +56,15 @@ def add_tree(request):
             return redirect('my_trees')
     else:
         form = TreeForm()
-
-    return render(request, 'tree_app/add_tree.html', {'form': form})
+    context =  {'form': form}
+    return render(request, 'tree_app/add_tree.html', context)
 
 
 # viewing my trees and the details
 @login_required
 def my_trees(request):
-    trees = Tree.objects.filter(owner=request.user)
-    context = {'tree_app': trees}
+    user_trees = Tree.objects.filter(owner=request.user)
+    context = {'tree_app': user_trees}
     return render(request, 'tree_app/my_trees.html', context )
 
 def tree_list(request):
@@ -74,7 +74,8 @@ def tree_list(request):
 
 def tree_detail(request, id):
     tree = get_object_or_404(Tree, id=id)
-    return render(request, 'tree_app/tree_detail.html', {'tree': tree})
+    context ={'tree': tree}
+    return render(request, 'tree_app/tree_detail.html', context)
 
 # editing the tree
 @login_required
@@ -92,8 +93,9 @@ def edit_tree(request, id):
             return redirect('tree_detail', id=tree.id)
     else:
         form = TreeForm(instance=tree)
-
-    return render(request, 'tree_app/edit_tree.html', {'form': form, 'tree': tree})
+    context =  {'form': form,
+                'tree': tree}
+    return render(request, 'tree_app/edit_tree.html',context)
 
 # deleting tree
 
@@ -110,8 +112,8 @@ def delete_tree(request, id):
         tree.delete()
         messages.success(request, "Tree deleted successfully.")
         return redirect('my_trees')
-
-    return render(request, 'tree_app/delete_tree.html', {'tree': tree})
+    context = {'tree': tree}
+    return render(request, 'tree_app/delete_tree.html',context)
 
 # price tag for the admin
 
@@ -128,8 +130,9 @@ def admin_edit_tree(request, id):
             return redirect('tree_detail', id=tree.id)
     else:
         form = TreeAdminForm(instance=tree)
-
-    return render(request, 'tree_app/admin_edit_tree.html', {'form': form, 'tree': tree})
+    context =  {'form': form,
+                'tree': tree}
+    return render(request, 'tree_app/admin_edit_tree.html',)
 
 # admin dashboard
 
@@ -137,4 +140,5 @@ def admin_edit_tree(request, id):
 def admina_dashboard(request):
     users = User.objects.all()
     trees = Tree.objects.all()
-    return render(request, 'tree_app/admin_dashboard.html', {'users': users, 'trees': trees})
+    context = {'users': users, 'trees': trees}
+    return render(request, 'tree_app/admin_dashboard.html', context)
