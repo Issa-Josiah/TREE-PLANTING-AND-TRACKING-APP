@@ -13,8 +13,6 @@ class Tree(models.Model):
 
     # Only admin can set these fields
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    payment_details = models.TextField(null=True, blank=True)
-
     # Track who added the tree
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 

@@ -2,7 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.tree_list, name='tree_list'),
+    path('', views.dashboard, name='dashboard'),
+    path('trees', views.tree_list, name='tree_list'),
     path('add/', views.add_tree, name='add_tree'),
     path('my-trees', views.my_trees, name='my_trees'),
 
@@ -18,7 +19,7 @@ path('tree/<int:id>/delete/', views.delete_tree, name='delete_tree'),
 path('tree/<int:id>/admin-edit/', views.admin_edit_tree, name='admin_edit_tree'),
 
 # admin dashboard
-path('admin/dashboard/', views.admina_dashboard, name='admina_dashboard'),
+path('dashboard/', views.admina_dashboard, name='admina_dashboard'),
 
 
 ]

@@ -1,0 +1,22 @@
+{% extends 'home.html' %}
+{% block title %}Pay for {{ event.title }}{% endblock %}
+
+{% block content %}
+<div style="background-color: #daffef;">
+<div class="card text-center">
+  <div class="card-header text-center-dark" >
+    DONATE TO HELP AND JOIN OUR JOURNEY
+  </div>
+  <div class="card-body bg-light" >
+    <h2 class="mb-4 text-center">Pay to Attend: {{ event.title }}</h2>
+      <p class="lead"> The event will be held in {{ event.location}} </p>
+   <p class="lead">Your support aids in making the world better</p>
+      <a  href="{% url 'payment' %}" class="btn-btn-primary fw-bold">DONATE TO SUPPORT</a>
+  </div>
+  <div class="card-footer text-muted">
+    Make the world green
+  </div>
+    </div>
+</div>
+{% endblock %}
+

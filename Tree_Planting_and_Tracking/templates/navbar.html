@@ -1,22 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background-color: #daffef;">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="{% url 'tree_list' %}">TreePlant</a>
+         <img src="{% static 'images/logo.png' %}" alt="Logo" height="60" class="me-2">
+        <a class="navbar-brand fw-bold fs-4" href="{% url 'dashboard' %}">TreePlant</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'tree_list' %}">Trees</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'event_list' %}">Events</a></li>
+                <li class="nav-item fs-4"><a class="nav-link" href="{% url 'tree_list' %}">Trees</a></li>
+                <li class="nav-item fs-4"><a class="nav-link" href="{% url 'event_list' %}">Events</a></li>
                 {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'my_trees' %}">My Trees</a></li>
+                    <li class="nav-item fs-4"><a class="nav-link" href="{% url 'my_trees' %}">My Trees</a></li>
                     {% if user.is_staff %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+                        <li class="nav-item fs-4"><a class="nav-link" href="{% url 'admina_dashboard' %}">Admin Dashboard</a></li>
                     {% endif %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    <li class="nav-item fs-5"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                    <li class="nav-item fs-4"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item fs-4 fw-bold"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
                 {% endif %}
             </ul>
         </div>

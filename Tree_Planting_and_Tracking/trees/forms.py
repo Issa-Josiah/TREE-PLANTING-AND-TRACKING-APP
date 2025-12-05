@@ -9,7 +9,7 @@ class TreeForm(forms.ModelForm):
 class TreeAdminForm(forms.ModelForm):
     class Meta:
         model = Tree
-        fields = ['price', 'payment_details']
+        fields = ['price', ]
         widgets = {
-            'payment_details': forms.Textarea(attrs={'rows': 3}),
+
         }

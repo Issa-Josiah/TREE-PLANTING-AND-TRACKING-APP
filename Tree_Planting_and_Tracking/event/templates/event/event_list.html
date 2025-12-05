@@ -1,6 +1,6 @@
 {% extends 'home.html' %}
 {% block title %}Events{% endblock %}
-
+{% load static %}
 {% block content %}
 <div class="container py-5">
     <h2 class="mb-4 text-center">Upcoming Events</h2>
@@ -11,20 +11,42 @@
         </div>
     {% endif %}
 
-    <div class="row g-4">
+    <div class="list-group">
         {% for event in events %}
-        <div class="col-md-4">
-            <div class="card custom-card p-3 h-100">
-                <h4>{{ event.title }}</h4>
-                <p>{{ event.description|truncatechars:100 }}</p>
-                <p><strong>Date:</strong> {{ event.date }}</p>
-                {% if user.is_staff %}
-                    <div class="d-flex gap-2 mt-2">
-                        <a href="{% url 'edit_event' event.id %}" class="btn btn-primary btn-custom btn-sm">Edit</a>
-                        <a href="{% url 'delete_event' event.id %}" class="btn btn-danger btn-custom btn-sm">Delete</a>
-                    </div>
+        <div class="list-group-item mb-3 p-3">
+
+            <!-- ✅ EVENT IMAGE ADDED -->
+            <div class="text-center mb-3">
+                <img src="{% static 'images/event.png' %}" alt="{{ event.title }}"  style="max-height: 250px; object-fit: cover;" class="img-fluid rounded" ">
+            </div>
+
+
+            <h4 class="display-4 text-center">{{ event.title }}</h4>
+            <p class="fs-4 text-center">{{ event.description }}</p>
+
+            <p class="text-info fs-5 text-center">
+                <strong>Date:</strong> {{ event.date }}
+            </p>
+
+            <!-- ✅ NEW LOCATION SHOWN -->
+            <p class="text-warning fs-5 text-center">
+                <strong>Location:</strong> {{ event.location }}
+            </p>
+
+            <div class="text-center mt-3">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'event_payment' event.id %}" class="btn btn-success btn-custom">Attend</a>
+                {% else %}
+                    <a href="{% url 'register' %}?next={% url 'event_payment' event.id %}" class="btn btn-success btn-custom">Attend</a>
                 {% endif %}
             </div>
+
+            {% if user.is_staff %}
+                <div class="d-flex gap-2 mt-2 justify-content-center">
+                    <a href="{% url 'edit_event' event.id %}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="{% url 'delete_event' event.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            {% endif %}
         </div>
         {% empty %}
             <p class="text-center">No events yet.</p>

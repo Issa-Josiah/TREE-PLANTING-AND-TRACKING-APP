@@ -9,6 +9,22 @@ from .models import Tree
 from .forms import TreeForm
 
 
+# normal page
+def dashboard(request):
+    trees = Tree.objects.all()  # show all trees
+    total_trees = trees.count()
+
+    context = {
+        'trees': trees,
+        'total_trees': total_trees,
+    }
+
+    if request.user.is_authenticated:
+        user_trees = trees.filter(owner=request.user)
+        context['user_trees'] = user_trees
+        context['user_total'] = user_trees.count()
+
+    return render(request, 'tree_app/dashboard.html', context)
 # adding tree
 
 @login_required
