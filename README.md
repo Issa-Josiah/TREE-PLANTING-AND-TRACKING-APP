@@ -2,7 +2,7 @@
 The helps to keep track of trees planted and connects sellers to tree growers. It also enable charity incase one wants to donate so as to aid in pushing tree planting .  Apart from  we can have a competition pull on those who have planted the most trees.
 
 ## home page visualisation low level
-<img src='home.png'>
+<img src='home_1.png'>
 
 
 ## tree page visualisation low level
