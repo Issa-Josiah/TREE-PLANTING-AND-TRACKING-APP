@@ -8,7 +8,8 @@ from django.contrib.auth.models import User
 class Tree(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
-    image = models.ImageField(upload_to="tree_images/", null=True, blank=True)
+    image = models.ImageField(upload_to='trees/', default='images/logo.png')
+
     location = models.CharField(max_length=200)
 
     # Only admin can set these fields
@@ -17,6 +18,14 @@ class Tree(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name\
+
+class Sponsor(models.Model):
+    name = models.CharField(max_length=100)
+    logo = models.ImageField(upload_to='sponsors/')
+    website = models.URLField(blank=True)
 
     def __str__(self):
         return self.name
