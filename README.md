@@ -18,10 +18,6 @@ The helps to keep track of trees planted and connects sellers to tree growers. I
 <img src='EVENTS SPONSOR AND DONATE.png'>
 
 
-## about page visualisation low level
-<img src='ABOUT.png'>
-
-
 ## login page visualisation low level
 <img src='LOGIN.png'>
 
