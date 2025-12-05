@@ -1,5 +1,5 @@
 {% load static %}
-<footer class="bg-dark text-light py-3 mt-auto fixed-bottom" >
+<footer class="bg-dark text-light py-2 mt-auto fixed-bottom"  >
     <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
 
         <!-- Logo and Organization Name -->
@@ -12,7 +12,7 @@
         <div class="text-center mb-2 mb-md-0">
             <a href="{% url 'tree_list' %}" class="text-light text-decoration-none me-3 fs-4">Trees</a>
             <a href="{% url 'event_list' %}" class="text-light text-decoration-none me-3 fs-4">Events</a>
-            <a href="#" class="text-light text-decoration-none me-3 fs-4">About Us</a>
+            <a href="{% url 'dashboard' %}" class="text-light text-decoration-none me-3 fs-4">About Us</a>
              <div>
             <p class="mb-0 text-center text-md-end fs-4">&copy; 2025 Tree Planting Organization</p>
         </div>
