@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Tree App{% endblock %}</title>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+     <!-- BOOTSTRAP JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+
+    <div class="container my-4">
+        {% block content %}
+<section class="hero bg-success text-white text-center d-flex align-items-center" style="height: 80vh;">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Plant Trees, Save the Planet</h1>
+        <p class="lead mb-4">Join us in making the world greener, one tree at a time.</p>
+        {% if user.is_authenticated %}
+            <a href="{% url 'tree_list' %}" class="btn btn-lg btn-light fw-bold">View Trees</a>
+        {% else %}
+            <a href="{% url 'register' %}" class="btn btn-lg btn-light fw-bold me-2">Get Started</a>
+            <a href="{% url 'login' %}" class="btn btn-lg btn-outline-light fw-bold">Login</a>
+        {% endif %}
+    </div>
+</section>
+
+<section class="features py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 p-3">
+                    <h4>Plant Trees</h4>
+                    <p>Users can plant trees and track their growth over time.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 p-3">
+                    <h4>Events</h4>
+                    <p>Participate in environmental events organized by our community.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 p-3">
+                    <h4>Admin Dashboard</h4>
+                    <p>Admin can manage trees, users, and events with ease.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+    </div>
+
+
+
+
+</body>
+</html>

@@ -7,7 +7,7 @@
 <!-- ===== Tree Carousel ===== -->
 
 <div id="treeCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000" style="height:75vh;">
-    <div class="carousel-inner h-100">
+    <div class="carousel-inner h-100" >
         {% for tree in trees %}
         <div class="carousel-item {% if forloop.first %}active{% endif %} h-100">
             <!-- Tree Image -->
@@ -211,6 +211,26 @@
 </div>
 
 
+<!--invitation to logii and perks-->
+<div class="container-lg my-4">
+    <section class="hero  text-white text-center d-flex align-items-center"
+         style="height:80vh; position:relative; background-color: #8FE388;" >
+
+    <div class="container">
+        <h1 class="display-4 fw-bold">Plant Trees, Save the Planet</h1>
+        <p class="lead mb-4">Join us in making the world greener, one tree at a time.</p>
+        {% if user.is_authenticated %}
+            <a href="{% url 'tree_list' %}" class="btn btn-lg btn-light fw-bold">View Trees</a>
+        {% else %}
+            <a href="{% url 'register' %}" class="btn btn-lg btn-light fw-bold me-2">Get Started</a>
+            <a href="{% url 'login' %}" class="btn btn-lg btn-outline-light fw-bold">Login</a>
+        {% endif %}
+    </div>
+</section>
+
+
+
+
 <!-- ===== Sponsors Carousel ===== -->
 <div class="container mt-5 mb-5">
     <h5 class="text-center mb-3">Our Sponsors</h5>
@@ -243,4 +263,8 @@
 </div>
 
 
+
+
+
 {% endblock %}
+

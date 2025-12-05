@@ -1,5 +1,5 @@
 {% load static %}
-<footer class="bg-dark text-light py-2 mt-auto fixed-bottom"  >
+<footer class="bg-secondary text-light py-2 mt-auto">
     <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
 
         <!-- Logo and Organization Name -->
@@ -8,17 +8,14 @@
             <span class="fw-bold fs-5">Tree Planting Organization</span>
         </div>
 
-        <!-- Links (hidden on small screens or stacked) -->
+        <!-- Navigation Links -->
         <div class="text-center mb-2 mb-md-0">
             <a href="{% url 'tree_list' %}" class="text-light text-decoration-none me-3 fs-4">Trees</a>
             <a href="{% url 'event_list' %}" class="text-light text-decoration-none me-3 fs-4">Events</a>
             <a href="{% url 'dashboard' %}" class="text-light text-decoration-none me-3 fs-4">About Us</a>
-             <div>
-            <p class="mb-0 text-center text-md-end fs-4">&copy; 2025 Tree Planting Organization</p>
-        </div>
         </div>
 
-        <!-- Social Media & Copyright -->
+        <!-- Social Media -->
         <div class="d-flex flex-column align-items-center align-items-md-end">
             <div class="mb-2">
                 <a href="https://facebook.com" class="text-light me-2">
@@ -30,7 +27,12 @@
                 <a href="https://instagram.com" class="text-light me-2">
                     <img src="{% static 'images/instagram.png' %}" alt="Instagram" height="24">
                 </a>
+            </div>
 
+            <p class="mb-0 text-center text-md-end fs-4">
+                &copy; 2025 Tree Planting Organization
+            </p>
+        </div>
 
     </div>
 </footer>
