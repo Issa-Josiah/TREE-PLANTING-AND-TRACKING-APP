@@ -1,5 +1,5 @@
 # TREE-PLANTING-AND-TRACKING-APP
-The helps to keep track of trees planted and connects the local tree sellers to tree growers. It also enable charity incase one wants to donate so as to aid in pushing tree planting .  Apart from  we can have a competition pull on those who have planted the most trees.
+The helps to keep track of trees planted and connects sellers to tree growers. It also enable charity incase one wants to donate so as to aid in pushing tree planting .  Apart from  we can have a competition pull on those who have planted the most trees.
 
 ## home page visualisation low level
 <img src='home.png'>
@@ -28,10 +28,45 @@ The helps to keep track of trees planted and connects the local tree sellers to 
 ## registration page visualisation low level
 <img src='registration.png'>
 
-packages to install
-1. django
-2. pillow
-3. environment
-4. python
-5. 
+
+## build up step process
+- install environment
+- install django-admin
+- start the django-admin project
+- create the user app
+- integrate the login,logout, register and mpesa integration
+
+## steps
+- install environment to separate from other work
+  
+        ''''
+        python -m venv env
+        activate
+        source env/Script/activate
+        ''''
+
+- this activates you environment
+- install django-admin and test
+
+
+      ''''
+    pip install django
+    testing
+    django-admin
+       '''' 
+
+- Next we start the project
+
+        ''''
+
+        django-admin startproject Tree_Tracking_App
+        ''''
+- enter the directory and start the app
+        
+        ''''
+        python manage.py startapp users
+
+        ''''
+- 
+
 
