@@ -69,6 +69,11 @@ def mpesaPayement(request):
         transaction_desc = 'service purchase'
         callback_url = 'https://api.darajambili.com/express-payment'
         response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
-        return HttpResponse(response)
+        context = {
+            'phone_number': phone_number,
+            'amount': amount,
+            'response': response,  # could contain checkoutRequestID etc
+        }
+        return render(request, 'accounts/waiting_response.html', context)
     context = {}
     return render(request, 'accounts/prompt_stk_push.html', context)

@@ -7,12 +7,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 
-
+#  the list of the event
 def event_list(request):
     events = Event.objects.all().order_by('date')
     context = {'events': events}
     return render(request, 'event/event_list.html', context)
 
+# adding of the event
 @staff_member_required
 def add_event(request):
 
@@ -29,6 +30,7 @@ def add_event(request):
         context = {'form': form}
     return render(request, 'event/add_event.html', context)
 
+# editing of the event
 @staff_member_required
 def edit_event(request, id):
 
@@ -45,6 +47,8 @@ def edit_event(request, id):
                    'event': event}
     return render(request, 'event/edit_event.html', context)
 
+
+# deleting of the event
 @staff_member_required
 def delete_event(request, id):
     event = get_object_or_404(Event, id=id)
@@ -55,6 +59,9 @@ def delete_event(request, id):
     context =  {'event': event}
     return render(request, 'event/delete_event.html', context)
 
+
+
+# payment of the event
 @login_required
 def event_payment(request, id):
     event = get_object_or_404(Event, id=id)
