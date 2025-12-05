@@ -5,7 +5,7 @@
 
 {% block content %}
 <!-- ===== Tree Carousel ===== -->
-<!-- ===== Tree Carousel ===== -->
+
 <div id="treeCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000" style="height:75vh;">
     <div class="carousel-inner h-100">
         {% for tree in trees %}
@@ -13,7 +13,7 @@
             <!-- Tree Image -->
             <img src="{{ tree.image.url }}" class="d-block w-100 h-100" style="object-fit:cover;" alt="{{ tree.name }}">
 
-            <!-- Caption Overlay -->
+
             <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3 shadow">
                 <h3 class="fw-bold">{{ tree.name }}</h3>
                 <p class="fs-6">{{ tree.description|truncatewords:25 }}</p>
@@ -92,7 +92,7 @@
 <div class="container mt-5">
     <h3 class="text-center fw-bold mb-4 text-success">Upcoming Events</h3>
     <div class="row row-cols-1 row-cols-md-2 g-4">
-        {% for event in events|slice:":4" %}
+        {% for event in event|slice:":4" %}
         <div class="col">
             <div class="card h-100 shadow-sm border-success rounded-4">
                 <img src="{{ event.image.url }}" class="card-img-top rounded-top-4" alt="{{ event.title }}">
@@ -151,28 +151,10 @@
 </div>
 
 <!-- ===== Benefits Section ===== -->
-<!-- ===== Benefits Section with Icon Hover Animation ===== -->
-<style>
-    .benefit-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .benefit-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 25px rgba(0,0,0,0.3);
-    }
 
-    /* Icon hover animation */
-    .benefit-card i {
-        transition: transform 0.3s ease, color 0.3s ease;
-    }
-    .benefit-card:hover i {
-        transform: scale(1.2) translateY(-5px);
-        color: #fff3cd; /* subtle highlight */
-    }
-</style>
 
 <div class="container mt-5">
-    <h3 class="text-center mb-5 fw-bold" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:2rem;">
+    <h3 class="text-center mb-5 fw-bold" style="font-family:   Geneva, Verdana, sans-serif; font-size:2rem;">
         Benefits of Planting and Tracking
     </h3>
     <div class="row justify-content-center g-4">
@@ -234,7 +216,7 @@
     <h5 class="text-center mb-3">Our Sponsors</h5>
     <div id="sponsorCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
         <div class="carousel-inner text-center">
-            {% for sponsor in sponsors %}
+            {% for sponsor in sponsor %}
                 {% if forloop.first or forloop.counter0|divisibleby:3 %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
                     <div class="d-flex justify-content-center align-items-center gap-4">
