@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'event',
     'django_daraja',
+    'sponsors',
 ]
 
 MIDDLEWARE = [

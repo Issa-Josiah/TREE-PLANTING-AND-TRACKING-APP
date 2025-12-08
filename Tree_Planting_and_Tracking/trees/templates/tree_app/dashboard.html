@@ -87,34 +87,10 @@
     </div>
 </div>
 
-<!-- ===== Events Sneak Peek ===== -->
-
-<div class="container mt-5">
-    <h3 class="text-center fw-bold mb-4 text-success">Upcoming Events</h3>
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        {% for event in event|slice:":4" %}
-        <div class="col">
-            <div class="card h-100 shadow-sm border-success rounded-4">
-                <img src="{{ event.image.url }}" class="card-img-top rounded-top-4" alt="{{ event.title }}">
-                <div class="card-body text-center">
-                    <h5 class="card-title fw-bold text-success">{{ event.title }}</h5>
-                    <p class="card-text">{{ event.description|truncatewords:15 }}</p>
-                    <p class="text-info"><strong>Date:</strong> {{ event.date }}</p>
-                    <a href="{% url 'event_payment' event.id %}" class="btn btn-success btn-sm rounded-pill px-3">Attend</a>
-                </div>
-            </div>
-        </div>
-        {% empty %}
-        <p class="text-center">No events yet.</p>
-        {% endfor %}
-    </div>
-    <div class="text-center mt-4">
-        <a href="{% url 'event_list' %}" class="btn btn-primary btn-lg rounded-pill px-4">View All Events</a>
-    </div>
-</div>
 
 <!-- ===== Mission & Vision ===== -->
-<div class="container mt-5">
+
+<div id="B1"  class="container mt-5">
     <div class="row g-4 text-center">
 
         <!-- Mission Card -->
@@ -227,6 +203,7 @@
         {% endif %}
     </div>
 </section>
+</div>
 
 
 
@@ -234,37 +211,34 @@
 <!-- ===== Sponsors Carousel ===== -->
 <div class="container mt-5 mb-5">
     <h5 class="text-center mb-3">Our Sponsors</h5>
+  {% if user.is_staff %}
+<a href="{% url 'add_sponsor' %}" class="btn btn-primary mb-3">Add New Sponsor</a>
+{% endif %}
+
     <div id="sponsorCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
-        <div class="carousel-inner text-center">
-            {% for sponsor in sponsor %}
-                {% if forloop.first or forloop.counter0|divisibleby:3 %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <div class="d-flex justify-content-center align-items-center gap-4">
-                {% endif %}
-
-                <img src="{{ sponsor.logo.url }}" style="height:100px;" alt="{{ sponsor.name }}">
-
-                {% if forloop.counter|divisibleby:3 or forloop.last %}
-                    </div>
-                </div>
-                {% endif %}
-            {% endfor %}
+    <div class="carousel-inner text-center">
+        {% for sponsor in sponsors %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+           <img src="{{ sponsor.logo.url }}" class="d-block w-100 img-fluid" style="height:100px; object-fit:contain;" alt="{{ sponsor.name }}">
         </div>
-        <!-- Carousel controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#sponsorCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#sponsorCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+        {% empty %}
+        <p>No sponsors yet.</p>
+        {% endfor %}
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#sponsorCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#sponsorCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
 </div>
 
 
-
-
-
 {% endblock %}
+
+
 

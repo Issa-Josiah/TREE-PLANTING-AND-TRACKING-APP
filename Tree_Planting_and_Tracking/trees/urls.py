@@ -18,8 +18,13 @@ path('tree/<int:id>/delete/', views.delete_tree, name='delete_tree'),
 # admin price
 path('tree/<int:id>/admin-edit/', views.admin_edit_tree, name='admin_edit_tree'),
 
+#     admin delete
+    path('tree/<int:id>/admin-delete/', views.admin_delete_tree, name='admin_delete_tree'),
+
 # admin dashboard
 path('dashboard/', views.admina_dashboard, name='admina_dashboard'),
 
-
 ]
+
+
+

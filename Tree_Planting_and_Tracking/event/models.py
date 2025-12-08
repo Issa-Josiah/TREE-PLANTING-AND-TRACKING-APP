@@ -13,7 +13,7 @@ class Event(models.Model):
     description = models.TextField()
     date = models.DateField()
     location = models.CharField(max_length=100, default='NAIROBI')
-    image = models.ImageField(upload_to='events/', default='images/img.png')
+    image = models.ImageField(upload_to='events/', default='events/event.png')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 

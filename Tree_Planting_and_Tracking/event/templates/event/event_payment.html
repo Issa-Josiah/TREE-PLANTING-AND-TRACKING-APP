@@ -1,22 +1,26 @@
-{% extends 'home.html' %}
+{% extends 'home_without_footer.html' %}
 {% block title %}Pay for {{ event.title }}{% endblock %}
 
 {% block content %}
-<div style="background-color: #daffef;">
-<div class="card text-center">
-  <div class="card-header text-center-dark" >
-    DONATE TO HELP AND JOIN OUR JOURNEY
-  </div>
-  <div class="card-body bg-light" >
-    <h2 class="mb-4 text-center">Pay to Attend: {{ event.title }}</h2>
-      <p class="lead"> The event will be held in {{ event.location}} </p>
-   <p class="lead">Your support aids in making the world better</p>
-      <a  href="{% url 'payment' %}" class="btn-btn-primary fw-bold">DONATE TO SUPPORT</a>
-  </div>
-  <div class="card-footer text-muted">
-    Make the world green
-  </div>
+<!-- Full page container -->
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh; background-color: #daffef; padding: 20px;">
+    <div class="card text-center w-100" style="max-width: 600px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.2);">
+        <div class="card-header bg-success text-white fw-bold" style="font-size: 1.2rem;">
+            DONATE TO HELP AND JOIN OUR JOURNEY
+        </div>
+        <div class="card-body bg-light p-5">
+            <h2 class="mb-5 display-5">Pay to Attend: {{ event.title }}</h2>
+            <p class="lead">The event will be held in <span class="fw-bold">{{ event.location }}</span></p>
+            <p class="lead">Your support aids in making the world better.</p>
+            <a href="{% url 'payment' %}" class="btn btn-primary btn-lg fw-bold mt-4" style="border-radius: 50px;">
+                DONATE TO SUPPORT
+            </a>
+
+            <p class="text-info my-2">PRESS THE ABOVE BIUTTON TO DONATE</p>
+        </div>
+        <div class="card-footer text-success fw-bold">
+            Make the world green
+        </div>
     </div>
 </div>
 {% endblock %}
-

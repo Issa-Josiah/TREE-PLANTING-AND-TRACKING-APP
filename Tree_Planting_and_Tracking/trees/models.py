@@ -22,10 +22,3 @@ class Tree(models.Model):
     def __str__(self):
         return self.name\
 
-class Sponsor(models.Model):
-    name = models.CharField(max_length=100)
-    logo = models.ImageField(upload_to='sponsors/')
-    website = models.URLField(blank=True)
-
-    def __str__(self):
-        return self.name
