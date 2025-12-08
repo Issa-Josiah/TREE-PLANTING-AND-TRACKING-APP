@@ -1,0 +1,87 @@
+
+{% extends "home.html" %}
+{% block content %}
+{% load static %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">🏆 Tree Planter Leaderboard</h2>
+
+    <div class="alert alert-success text-center" role="alert">
+        🌱 Keep planting trees and see your name rise on the leaderboard! Every tree counts! 🌍
+    </div>
+
+    <!-- Add Tree button (only for logged-in users) -->
+    {% if user.is_authenticated %}
+    <div class="mb-3 text-end">
+        <a href="{% url 'add_tree' %}" class="btn btn-primary">
+            ➕ Add a Tree
+        </a>
+    </div>
+    {% endif %}
+
+    <table class="table table-striped table-bordered shadow">
+        <thead class="table-dark">
+            <tr>
+                <th>Rank</th>
+                <th>User</th>
+                <th>Trees Planted</th>
+                <th>Status</th>
+                <th>Badge</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in leaderboard %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                 <td>{{ user.username }}</td>
+                <td>{{ user.tree_count }}</td>
+                       <td>
+    {% if user.tree_count > 0 %}
+        <span class="badge bg-success">Active Planter</span>
+    {% else %}
+        <span class="badge bg-secondary">Newbie</span>
+    {% endif %}
+</td>
+
+                <td>{{ user.badge }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No trees planted yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<!-- ===== Sponsors Carousel ===== -->
+<div class="container mt-5 mb-5">
+    <h5 class="text-center mb-3">Our Sponsors</h5>
+  {% if user.is_staff %}
+<a href="{% url 'add_sponsor' %}" class="btn btn-primary mb-3">Add New Sponsor</a>
+{% endif %}
+
+    <div id="sponsorCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+    <div class="carousel-inner text-center">
+        {% for sponsor in sponsors %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+           <img src="{{ sponsor.logo.url }}" class="d-block w-100 img-fluid" style="height:100px; object-fit:contain;" alt="{{ sponsor.name }}">
+        </div>
+        {% empty %}
+        <p>No sponsors yet.</p>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#sponsorCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#sponsorCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+</div>
+{% endblock %}
+

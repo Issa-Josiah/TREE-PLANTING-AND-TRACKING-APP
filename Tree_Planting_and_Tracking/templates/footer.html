@@ -5,14 +5,17 @@
         <!-- Logo and Organization Name -->
         <div class="d-flex align-items-center mb-2 mb-md-0">
             <img src="{% static 'images/logo.png' %}" alt="Logo" height="60" class="me-2">
-            <span class="fw-bold fs-5">Tree Planting Organization</span>
+            <span class="fw-bold fs-5">TreeTops</span>
         </div>
 
         <!-- Navigation Links -->
         <div class="text-center mb-2 mb-md-0">
             <a href="{% url 'tree_list' %}" class="text-light text-decoration-none me-3 fs-4">Trees</a>
             <a href="{% url 'event_list' %}" class="text-light text-decoration-none me-3 fs-4">Events</a>
-           <a href="{% url 'dashboard' %}#B1" class="text-light text-decoration-none me-3 fs-4">About Us</a>
+           <a href="{% url 'about' %}" class="text-light text-decoration-none me-3 fs-4">About Us</a>
+               <p class="mb-0 text-center text-md-end fs-4">
+                &copy; 2025 Tree Planting Organization
+            </p>
 
         </div>
 
@@ -30,9 +33,7 @@
                 </a>
             </div>
 
-            <p class="mb-0 text-center text-md-end fs-4">
-                &copy; 2025 Tree Planting Organization
-            </p>
+
         </div>
 
     </div>

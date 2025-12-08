@@ -1,0 +1,120 @@
+{% extends 'home.html' %}
+{%load static%}
+<!-- ===== Mission & Vision ===== -->
+{% block content %}
+<div id="B1"  class="container mt-5">
+    <div class="row g-4 text-center">
+
+        <!-- Mission Card -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg h-100 bg-success bg-opacity-10 mission-vision-card animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <div class="mb-3 animate__animated animate__bounceIn">
+                        <i class="bi bi-tree-fill text-success fs-1"></i>
+                    </div>
+                    <h4 class="card-title fw-bold text-success">Our Mission</h4>
+                    <p class="card-text fs-5">
+                        To increase the Earth's vegetation through tree planting and environmental awareness.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vision Card -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg h-100 bg-success bg-opacity-10 mission-vision-card animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <div class="mb-3 animate__animated animate__bounceIn">
+                        <i class="bi bi-globe2 text-success fs-1"></i>
+                    </div>
+                    <h4 class="card-title fw-bold text-success">Our Vision</h4>
+                    <p class="card-text fs-5">
+                        Making the world green and sustainable for future generations.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ===== Benefits Section ===== -->
+
+
+<div class="container mt-5">
+    <h3 class="text-center mb-5 fw-bold" style="font-family:   Geneva, Verdana, sans-serif; font-size:2rem;">
+        Benefits of Planting and Tracking
+    </h3>
+    <div class="row justify-content-center g-4">
+
+        <div class="col-12 col-md-6">
+            <div class="p-4 bg-success text-white rounded shadow-lg text-center h-100 benefit-card">
+                <i class="bi bi-tree fs-1 mb-3"></i>
+                <h5 class="fw-bold mb-3" style="font-size:1.5rem;">Environmental Impact</h5>
+                <p class="fs-5">Reduce carbon footprint and improve air quality.</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="p-4 bg-success text-white rounded shadow-lg text-center h-100 benefit-card">
+                <i class="bi bi-people fs-1 mb-3"></i>
+                <h5 class="fw-bold mb-3" style="font-size:1.5rem;">Community Engagement</h5>
+                <p class="fs-5">Encourage community participation and awareness.</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="p-4 bg-success text-white rounded shadow-lg text-center h-100 benefit-card">
+                <i class="bi bi-graph-up fs-1 mb-3"></i>
+                <h5 class="fw-bold mb-3" style="font-size:1.5rem;">Track Growth</h5>
+                <p class="fs-5">Monitor tree growth and maintain sustainability goals.</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="p-4 bg-success text-white rounded shadow-lg text-center h-100 benefit-card">
+                <i class="bi bi-bird fs-1 mb-3"></i>
+                <h5 class="fw-bold mb-3" style="font-size:1.5rem;">Wildlife Support</h5>
+                <p class="fs-5">Provide habitats for birds, insects, and other wildlife.</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="p-4 bg-success text-white rounded shadow-lg text-center h-100 benefit-card">
+                <i class="bi bi-droplet fs-1 mb-3"></i>
+                <h5 class="fw-bold mb-3" style="font-size:1.5rem;">Soil Protection</h5>
+                <p class="fs-5">Prevent soil erosion and maintain soil fertility.</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="p-4 bg-success text-white rounded shadow-lg text-center h-100 benefit-card">
+                <i class="bi bi-heart fs-1 mb-3"></i>
+                <h5 class="fw-bold mb-3" style="font-size:1.5rem;">Mental Wellbeing</h5>
+                <p class="fs-5">Enhance mental health and promote relaxation through green spaces.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--invitation to logii and perks-->
+<div class="container-lg my-4">
+    <section class="hero  text-white text-center d-flex align-items-center"
+         style="height:80vh; position:relative; background-color: #8FE388;" >
+
+    <div class="container">
+        <h1 class="display-4 fw-bold">Plant Trees, Save the Planet</h1>
+        <p class="lead mb-4">Join us in making the world greener, one tree at a time.</p>
+        {% if user.is_authenticated %}
+            <a href="{% url 'tree_list' %}" class="btn btn-lg btn-light fw-bold">View Trees</a>
+        {% else %}
+            <a href="{% url 'register' %}" class="btn btn-lg btn-light fw-bold me-2">Get Started</a>
+            <a href="{% url 'login' %}" class="btn btn-lg btn-outline-light fw-bold">Login</a>
+        {% endif %}
+    </div>
+</section>
+</div>
+
+{% endblock %}

@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
@@ -5,12 +7,43 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
+from django.db.models import Count
 from .models import Tree
 from .forms import TreeForm
 from .forms import TreeAdminForm
 from sponsors.models import Sponsor
 from event.models import Event
 
+
+
+def get_badge(tree_count):
+    if tree_count >= 50:
+        return "🥇 Gold"
+    elif tree_count >= 30:
+        return "🥈 Silver"
+    elif tree_count >= 10:
+        return "🥉 Bronze"
+    else:
+        return "🌼"  # No badge
+
+
+def leaderboard(request):
+    leaderboard_data = (
+        User.objects.annotate(tree_count=Count('tree'))
+        .order_by('-tree_count')
+    )
+
+    # Add badge attribute dynamically
+    for user in leaderboard_data:
+        user.badge = get_badge(user.tree_count)
+    sponsors = Sponsor.objects.all()
+    context = {
+        'leaderboard': leaderboard_data,
+        'sponsors' : sponsors,
+    }
+    return render(request, 'tree_app/leaderboard.html', context)
 
 # normal page
 def dashboard(request):
@@ -147,6 +180,29 @@ def admin_delete_tree(request, id):
     context = {'tree': tree}
     return render(request, 'tree_app/tree_delete.html', context)
 
+
+def about(request):
+    return render(request, 'tree_app/about.html')
+def contact(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message_content = request.POST.get('message')
+
+        # Send email
+        send_mail(
+            subject=f"Contact Us Message from {name}",
+            message=message_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.DEFAULT_FROM_EMAIL],
+            fail_silently=False,
+        )
+
+        # Add success message
+        messages.success(request, "✅ Your message has been sent successfully. Thank you!")
+        return redirect('contact')  # Redirect after POST
+
+    return render(request, 'tree_app/contact_us.html')
 
 # admin dashboard
 
