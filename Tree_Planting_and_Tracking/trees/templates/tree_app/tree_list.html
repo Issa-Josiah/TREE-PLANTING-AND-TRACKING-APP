@@ -32,9 +32,7 @@
                     <h5 class="card-title">{{ tree.name }}</h5>
                     <p class="card-text flex-grow-1">{{ tree.description|truncatechars:80 }}</p>
                     <p><strong>Location:</strong> {{ tree.location }}</p>
-                    <p><strong>Price:</strong>
-                        {% if tree.price %}KES {{ tree.price }}{% else %}Not set{% endif %}
-                    </p>
+                    
                     <a href="{% url 'tree_detail' tree.id %}" class="btn btn-primary mt-auto">View</a>
                 </div>
             </div>

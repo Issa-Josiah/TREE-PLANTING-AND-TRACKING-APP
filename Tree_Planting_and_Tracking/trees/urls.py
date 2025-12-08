@@ -15,6 +15,9 @@ path('tree/<int:id>/edit/', views.edit_tree, name='edit_tree'),
 #     deleting a tree
 path('tree/<int:id>/delete/', views.delete_tree, name='delete_tree'),
 
+#     leaderboard
+    path('leaderboard/', views.leaderboard, name='leaderboard'),
+
 # admin price
 path('tree/<int:id>/admin-edit/', views.admin_edit_tree, name='admin_edit_tree'),
 
@@ -23,7 +26,8 @@ path('tree/<int:id>/admin-edit/', views.admin_edit_tree, name='admin_edit_tree')
 
 # admin dashboard
 path('dashboard/', views.admina_dashboard, name='admina_dashboard'),
-
+path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
 ]
 
 
