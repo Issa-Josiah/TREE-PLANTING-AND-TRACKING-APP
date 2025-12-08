@@ -8,7 +8,7 @@ from django.contrib import messages
 from .models import Tree
 from .forms import TreeForm
 from .forms import TreeAdminForm
-from .models import Sponsor
+from sponsors.models import Sponsor
 from event.models import Event
 
 
@@ -23,18 +23,18 @@ def dashboard(request):
     if request.user.is_authenticated:
         user_total = Tree.objects.filter(owner=request.user).count() if request.user.is_authenticated else 0
 
-        # Upcoming events (ordered by date)
-        events = Event.objects.order_by('date')[:4]
+    # Upcoming events (ordered by date)
+    events = Event.objects.order_by('date')[:3]
 
-        # Sponsors
-        sponsors = Sponsor.objects.all()
+    # Sponsors
+    sponsors = Sponsor.objects.all()
 
     context = {
         'trees': trees,
         'total_trees': total_trees,
         'user_total': user_total,
-        'events': Event,
-        'sponsors': Sponsor,
+        'events': events,
+        'sponsors': sponsors,
     }
 
     if request.user.is_authenticated:
@@ -64,7 +64,7 @@ def add_tree(request):
 @login_required
 def my_trees(request):
     user_trees = Tree.objects.filter(owner=request.user)
-    context = {'tree_app': user_trees}
+    context = {'my_tree': user_trees}
     return render(request, 'tree_app/my_trees.html', context )
 
 def tree_list(request):
@@ -113,7 +113,7 @@ def delete_tree(request, id):
         messages.success(request, "Tree deleted successfully.")
         return redirect('my_trees')
     context = {'tree': tree}
-    return render(request, 'tree_app/delete_tree.html',context)
+    return render(request, 'tree_app/tree_delete.html',context)
 
 # price tag for the admin
 
@@ -123,16 +123,30 @@ def admin_edit_tree(request, id):
     tree = get_object_or_404(Tree, id=id)
 
     if request.method == "POST":
-        form = TreeAdminForm(request.POST, instance=tree)
+        form = TreeAdminForm(request.POST, request.FILES, instance=tree)
         if form.is_valid():
             form.save()
-            messages.success(request, "Tree price/payment updated successfully.")
-            return redirect('tree_detail', id=tree.id)
+            messages.success(request, "Tree updated successfully.")
+            return redirect('admina_dashboard')
     else:
         form = TreeAdminForm(instance=tree)
-    context =  {'form': form,
-                'tree': tree}
-    return render(request, 'tree_app/admin_edit_tree.html',)
+
+    context = {'form': form, 'tree': tree}
+    return render(request, 'tree_app/edit_tree.html', context)
+
+# delete_tree
+@staff_member_required
+def admin_delete_tree(request, id):
+    tree = get_object_or_404(Tree, id=id)
+
+    if request.method == "POST":
+        tree.delete()
+        messages.success(request, "Tree deleted successfully.")
+        return redirect('admina_dashboard')
+
+    context = {'tree': tree}
+    return render(request, 'tree_app/tree_delete.html', context)
+
 
 # admin dashboard
 
@@ -140,5 +154,8 @@ def admin_edit_tree(request, id):
 def admina_dashboard(request):
     users = User.objects.all()
     trees = Tree.objects.all()
-    context = {'users': users, 'trees': trees}
+    events = Event.objects.all().order_by('date')
+    context = {'users': users,
+               'trees': trees,
+               'events': events}
     return render(request, 'tree_app/admin_dashboard.html', context)

@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('trees.urls')),
     path('users/', include('users.urls')),
     path('events/', include('event.urls')),
+    path('sponsors/', include('sponsors.urls')),
 
 ]
 

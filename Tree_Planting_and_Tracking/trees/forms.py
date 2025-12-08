@@ -9,7 +9,7 @@ class TreeForm(forms.ModelForm):
 class TreeAdminForm(forms.ModelForm):
     class Meta:
         model = Tree
-        fields = ['price', ]
+        fields = ['name', 'price', 'description', 'image', 'location']
         widgets = {
 
         }
