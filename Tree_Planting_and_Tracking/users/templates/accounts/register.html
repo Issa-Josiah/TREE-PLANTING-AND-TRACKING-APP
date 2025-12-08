@@ -1,33 +1,174 @@
 {% extends 'home_without_footer.html' %}
-
-
+{% load static %}
 {% block title %}Register{% endblock %}
 
 {% block content %}
-<div class="card custom-card p-4" style="max-width: 500px; margin: auto;">
-    <h2>Register</h2>
 
-    <form method="POST">
-        {% csrf_token %}
+<style>
+/* Split container below navbar */
+.split-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px; /* space under navbar */
+    max-height: 80vh; /* not too tall */
+    gap: 20px;
+}
 
-        <div class="mb-3">
-            <label>Username</label>
-            <input class="form-control" type="text" name="username" required>
+/* LEFT PANEL: REGISTER FORM */
+.left-panel {
+    flex: 1;
+    min-width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f7f7f7;
+    padding: 30px;
+}
+
+
+/* REGISTER CARD */
+.register-card {
+    width: 100%;
+    max-width: 520px; /* increased from 450px */
+    padding: 45px;    /* increased from 30px */
+    border-radius: 15px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+    border: 1px solid #e4e4e4;
+}
+
+.register-title {
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 26px;
+    color: #222;
+}
+
+/* Inputs */
+label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.form-control {
+    height: 45px;
+    border-radius: 10px;
+    border: 1.6px solid #cfd3d7;
+    font-size: 15px;
+    padding-right: 45px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.15rem rgba(40, 167, 69, 0.25);
+    border-color: #28a745;
+}
+
+/* Password wrapper & toggle */
+.password-wrapper {
+    position: relative;
+}
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+    user-select: none;
+}
+
+/* Button */
+.register-btn {
+    height: 45px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* RIGHT PANEL: VIDEO */
+.right-panel {
+    flex: 1;
+    min-width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-panel video {
+    width: 100%;
+    max-height: 450px; /* prevent overly tall video */
+    object-fit: cover;
+    border-radius: 12px;
+}
+</style>
+
+<div class="split-container">
+
+    <!-- LEFT PANEL: REGISTER FORM -->
+    <div class="left-panel">
+        <div class="register-card">
+            <h2 class="register-title">Register</h2>
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label>Username</label>
+                    <input class="form-control" id="usernameField" type="text" name="username" placeholder="Enter your username" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input class="form-control" id="emailField" type="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="mb-3 password-wrapper">
+                    <label>Password</label>
+                    <input class="form-control" id="passwordField" type="password" name="password" placeholder="Enter your password" required>
+                    <span class="toggle-password" id="togglePassword">👁️</span>
+                </div>
+
+                <button class="btn btn-success w-100 register-btn">Register</button>
+            </form>
         </div>
+    </div>
 
-        <div class="mb-3">
-            <label>Email</label>
-            <input class="form-control" type="email" name="email" required>
-        </div>
+    <!-- RIGHT PANEL: VIDEO -->
+    <div class="right-panel">
+        <video id="myVideo" autoplay muted loop playsinline>
+            <source src="{% static 'video/vid.mp4' %}" type="video/mp4">
+        </video>
+    </div>
 
-        <div class="mb-3">
-            <label>Password</label>
-            <input class="form-control" type="password" name="password" required>
-        </div>
-
-        <button class="btn btn-success w-100">Register</button>
-
-    </form>
 </div>
-{% endblock %}
 
+<script>
+// Unmute video on input focus
+function enableSound() {
+    document.getElementById("myVideo").muted = false;
+}
+document.getElementById("usernameField").addEventListener("focus", enableSound);
+document.getElementById("emailField").addEventListener("focus", enableSound);
+document.getElementById("passwordField").addEventListener("focus", enableSound);
+
+// Toggle password visibility
+const passwordField = document.getElementById("passwordField");
+const togglePassword = document.getElementById("togglePassword");
+
+togglePassword.addEventListener("click", () => {
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        togglePassword.textContent = "🙈";
+    } else {
+        passwordField.type = "password";
+        togglePassword.textContent = "👁️";
+    }
+});
+</script>
+
+{% endblock %}

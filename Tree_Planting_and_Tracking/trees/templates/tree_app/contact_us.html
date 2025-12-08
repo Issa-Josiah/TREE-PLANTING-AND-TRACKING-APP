@@ -1,5 +1,13 @@
 {% extends "home.html" %}
+{% load static %}
 {% block content %}
+<!-- Floating Donate Button (Top-Right, Circular) -->
+<a href="{% url 'payment' %}" target="_blank"
+   style="position: fixed; top: 80px; right: 20px; z-index: 1050;">
+    <img src="{% static 'images/donate.png' %}" alt="Donate"
+         style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.2s;">
+</a>
+
 <div class="container mt-5">
     <h2 class="text-center mb-4">📬 Contact Us</h2>
 
@@ -31,13 +39,20 @@
         </form>
 
        {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-success mt-3 text-center" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
+            {% for message in messages %}
+                <div class="alert alert-success mt-3 text-center" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
 
     </div>
 </div>
+
+<!-- Optional Hover Effect -->
+<style>
+    a img:hover {
+        transform: scale(1.1);
+    }
+</style>
 {% endblock %}

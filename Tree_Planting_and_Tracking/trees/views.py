@@ -25,8 +25,12 @@ def get_badge(tree_count):
         return "🥈 Silver"
     elif tree_count >= 10:
         return "🥉 Bronze"
+    elif tree_count >=2:
+        return "🌲🌲 forest"
+    elif tree_count ==1:
+        return "🌳 starter"
     else:
-        return "🌼"  # No badge
+        return "🌼bud"  # No badge
 
 
 def leaderboard(request):
