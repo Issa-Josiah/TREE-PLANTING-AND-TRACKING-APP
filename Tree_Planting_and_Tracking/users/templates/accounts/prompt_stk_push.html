@@ -2,8 +2,10 @@
 
 {% block content %}
 
-<form method="POST" action="">
+<form method="POST" action="{% url 'payment' %}" class="p-4 bg-light rounded shadow-sm">
     {% csrf_token %}
+
+    <h4 class="mb-4">M-Pesa Payment</h4>
 
     <div class="mb-3">
         <label for="name" class="form-label">Full Name</label>
@@ -23,19 +25,23 @@
         </select>
     </div>
 
+    <!-- Tree selection, only visible when buying -->
     <div class="mb-3 d-none" id="treeSection">
         <label class="form-label">Select Tree</label>
-        <select id="treeSelect" class="form-select">
+        <select id="treeSelect" name="tree" class="form-select">
             <option value="">-- Choose Tree --</option>
             {% for tree in trees %}
-                <option value="{{ tree.price }}">{{ tree.name }} — KES {{ tree.price }}</option>
+                <option value="{{ tree.id }}" data-price="{{ tree.price }}">
+                    {{ tree.name }} — KES {{ tree.price }}
+                </option>
             {% endfor %}
         </select>
     </div>
 
+    <!-- Quantity, only visible when buying -->
     <div class="mb-3 d-none" id="quantitySection">
         <label class="form-label">Quantity</label>
-        <input type="number" class="form-control" id="quantity" min="1" value="1">
+        <input type="number" class="form-control" id="quantity" name="quantity" min="1" value="1">
     </div>
 
     <div class="mb-3">
@@ -43,7 +49,7 @@
         <input type="text" class="form-control" id="amount" name="amount" required>
     </div>
 
-    <button type="submit" class="btn btn-dark w-100">PAY</button>
+    <button type="submit" class="btn btn-success w-100">PAY</button>
 </form>
 
 <script>
@@ -51,35 +57,39 @@ const paymentType = document.getElementById("paymentType");
 const treeSection = document.getElementById("treeSection");
 const quantitySection = document.getElementById("quantitySection");
 const treeSelect = document.getElementById("treeSelect");
-const quantity = document.getElementById("quantity");
-const amount = document.getElementById("amount");
+const quantityInput = document.getElementById("quantity");
+const amountInput = document.getElementById("amount");
 
 function updateAmount() {
     if(paymentType.value === "buy") {
-        const price = parseFloat(treeSelect.value);
-        const qty = parseInt(quantity.value) || 1;
-        if(!isNaN(price)) {
-            amount.value = price * qty;
-        }
+        const price = parseFloat(treeSelect.selectedOptions[0].dataset.price) || 0;
+        const qty = parseInt(quantityInput.value) || 1;
+        amountInput.value = price * qty;
+        amountInput.readOnly = true;
+    } else {
+        amountInput.readOnly = false;
     }
 }
 
+// Show/hide tree and quantity sections based on payment type
 paymentType.addEventListener("change", function() {
     if(this.value === "buy") {
         treeSection.classList.remove("d-none");
         quantitySection.classList.remove("d-none");
-        amount.readOnly = true;
-        updateAmount();
     } else {
         treeSection.classList.add("d-none");
         quantitySection.classList.add("d-none");
-        amount.readOnly = false;
-        amount.value = "";
+        amountInput.value = "";
     }
+    updateAmount();
 });
 
+// Update amount when tree or quantity changes
 treeSelect.addEventListener("change", updateAmount);
-quantity.addEventListener("input", updateAmount);
+quantityInput.addEventListener("input", updateAmount);
+
+// Initialize amount
+updateAmount();
 </script>
 
 {% endblock %}

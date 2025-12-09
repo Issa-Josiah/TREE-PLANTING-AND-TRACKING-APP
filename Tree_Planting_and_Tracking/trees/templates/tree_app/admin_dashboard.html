@@ -164,7 +164,13 @@
                                     <td>{{ payment.payment_type }}</td>
                                     <td>KES {{ payment.amount }}</td>
                                     <td>{{ payment.phone_number }}</td>
-                                    <td>{% if payment.tree %}Tree{% else %}Donate{% endif %}</td>
+                                    <td>
+                                        {% if payment.tree %}
+                                            Tree ({{ payment.tree.name }})
+                                        {% else %}
+                                            Donate
+                                        {% endif %}
+                                    </td>
 
                                 </tr>
                                 {% empty %}
