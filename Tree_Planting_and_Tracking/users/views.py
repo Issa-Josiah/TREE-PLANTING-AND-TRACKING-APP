@@ -8,6 +8,9 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django_daraja.mpesa.core import MpesaClient
 from django.contrib.admin.views.decorators import staff_member_required
+from sponsors.models import Payment
+from trees.models import Tree
+from django.contrib.auth.decorators import login_required
 
 @staff_member_required
 def admin_add_user(request):
@@ -38,8 +41,6 @@ def register_user(request):
 
     return render(request, 'accounts/register.html')
 
-
-
 def admin_delete_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
     if request.method == 'POST':
@@ -56,7 +57,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('tree_list')
+            return redirect('dashboard')
         else:
             messages.error(request, "Invalid login")
 
@@ -80,35 +81,64 @@ def index(request):
     response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
     return HttpResponse(response)
 
+
+
+
 def mpesaPayement(request):
+    trees = Tree.objects.all()
+
     if request.method == "POST":
+        payment_type = request.POST.get("paymentType")
+        tree_id = request.POST.get("tree")
+        quantity = request.POST.get("quantity")
+        name = request.POST.get("name")
+        phone_number = request.POST.get("phoneNumber")
+        amount = request.POST.get("amount")
 
-        phone_number = request.POST.get('phoneNumber', '').strip()
-        amount = request.POST.get('amount', '').strip()
-
-
-        # ensure the input is good
+        # Validate amount
         try:
             amount = int(float(amount))
-        except ValueError:
-            return HttpResponse("Amount must be a valid number")
+        except:
+            return HttpResponse("Invalid amount")
 
+        tree = None
+        if payment_type == "buy":
+            tree = get_object_or_404(Tree, id=tree_id)
+            quantity = int(quantity)
+            if amount != tree.price * quantity:
+                return HttpResponse("Amount mismatch detected!")
+
+        # M-Pesa integration
         cl = MpesaClient()
-        # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
-        account_reference = 'TreeTops'
-        transaction_desc = 'service purchase'
-        callback_url = 'https://api.darajambili.com/express-payment'
-        response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+        response = cl.stk_push(
+            phone_number,
+            amount,
+            account_reference="TreeTops",
+            transaction_desc="Tree Payment",
+            callback_url="https://api.darajambili.com/express-payment"
+        )
 
-        # users name
-        name = request.POST.get('name', '').strip()
-        context = {
-            'name': name,
-            'phone_number': phone_number,
-            'amount': amount,
-            'response': response,
-        }
+        # Save payment
+        Payment.objects.create(
+            user=request.user,
+            payment_type=payment_type,
+            tree=tree if tree else None,
+            quantity=quantity if tree else 1,
+            amount=amount,
+            phone_number=phone_number,
+            name=name
+        )
+        context = {"response": response,
+                   "name": name,
+                   "amount": amount,
+                   "phone_number": phone_number}
 
-        return render(request, 'accounts/waiting_response.html', context)
-    context = {}
-    return render(request, 'accounts/prompt_stk_push.html', context)
+        return render(request, "accounts/waiting_response.html", context)
+    context =  {"trees": trees}
+    return render(request, "accounts/prompt_stk_push.html", context)
+
+@staff_member_required
+def payments_list(request):
+    payments = Payment.objects.all().order_by('-date')
+    context =  {"payments": payments}
+    return render(request, "accounts/payments_details.html", context)

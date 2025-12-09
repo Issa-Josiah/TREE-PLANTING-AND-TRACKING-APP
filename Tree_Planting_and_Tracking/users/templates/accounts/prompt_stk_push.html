@@ -4,25 +4,82 @@
 
 <form method="POST" action="">
     {% csrf_token %}
-  <div class="mb-3">
 
-      <div class="mb-3">
+    <div class="mb-3">
         <label for="name" class="form-label">Full Name</label>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
     </div>
 
-    <label for="phoneNumber" class="form-label">PHONE NUMBER</label>
-    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" >
-    <div id="phoneHelp" class="form-text">Please enter your phone number example 07******* </div>
-  </div>
-  <div class="mb-3">
-    <label for="amount" class="form-label">Amount</label>
-    <input type="text" class="form-control" id="amount" name="amount">
-  </div>
+    <div class="mb-3">
+        <label for="phoneNumber" class="form-label">Phone Number</label>
+        <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="07XXXXXXXX" required>
+    </div>
 
-  <button type="submit" class="btn btn-dark">PAY</button>
+    <div class="mb-3">
+        <label class="form-label">Payment Type</label>
+        <select id="paymentType" name="paymentType" class="form-select">
+            <option value="donate">Donate</option>
+            <option value="buy">Buy Tree</option>
+        </select>
+    </div>
+
+    <div class="mb-3 d-none" id="treeSection">
+        <label class="form-label">Select Tree</label>
+        <select id="treeSelect" class="form-select">
+            <option value="">-- Choose Tree --</option>
+            {% for tree in trees %}
+                <option value="{{ tree.price }}">{{ tree.name }} — KES {{ tree.price }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3 d-none" id="quantitySection">
+        <label class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="quantity" min="1" value="1">
+    </div>
+
+    <div class="mb-3">
+        <label for="amount" class="form-label">Amount (KES)</label>
+        <input type="text" class="form-control" id="amount" name="amount" required>
+    </div>
+
+    <button type="submit" class="btn btn-dark w-100">PAY</button>
 </form>
 
+<script>
+const paymentType = document.getElementById("paymentType");
+const treeSection = document.getElementById("treeSection");
+const quantitySection = document.getElementById("quantitySection");
+const treeSelect = document.getElementById("treeSelect");
+const quantity = document.getElementById("quantity");
+const amount = document.getElementById("amount");
+
+function updateAmount() {
+    if(paymentType.value === "buy") {
+        const price = parseFloat(treeSelect.value);
+        const qty = parseInt(quantity.value) || 1;
+        if(!isNaN(price)) {
+            amount.value = price * qty;
+        }
+    }
+}
+
+paymentType.addEventListener("change", function() {
+    if(this.value === "buy") {
+        treeSection.classList.remove("d-none");
+        quantitySection.classList.remove("d-none");
+        amount.readOnly = true;
+        updateAmount();
+    } else {
+        treeSection.classList.add("d-none");
+        quantitySection.classList.add("d-none");
+        amount.readOnly = false;
+        amount.value = "";
+    }
+});
+
+treeSelect.addEventListener("change", updateAmount);
+quantity.addEventListener("input", updateAmount);
+</script>
+
 {% endblock %}
-
-
