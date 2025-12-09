@@ -1,11 +1,35 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Poppins, 'Arial', sans-serif;
     background-color: #d9d9d9;
     color: #333;
 }
+
 :root{
 --gen:DAFFEF
 }
+.section-box {
+    background: #f8faff; /* soft light blue/white */
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    transition: 0.3s ease;
+}
+
+.section-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.section-title {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.section-text {
+    color: #555;
+    line-height: 1.7;
+}
+
 .hero::before {
     content: "";
     position: absolute;
