@@ -2,63 +2,91 @@
 {% block title %}Events{% endblock %}
 {% load static %}
 {% block content %}
-<div class="container py-5">
+<div class="container-fluid py-4">
+    <div class="row">
 
-    <h2 class="mb-4 text-center">Upcoming Events</h2>
-    <a href="{% url 'payment' %}" target="_blank"
-   style="position: fixed; top: 80px; right: 20px; z-index: 1050;">
+        <!-- Sidebar: Months -->
+        <div class="col-md-3 mb-4 py-5 " >
+            <div class="list-group position-sticky" style="top: 80px;">
+                {% for num, month_name in months %}
+                    <a href="{% url 'event_list' %}?month={{ num }}"
+                       class="list-group-item list-group-item-action {% if selected_month == num %}active{% endif %}">
+                        {{ month_name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Events -->
+        <div class="col-md-9">
+            <h2 class="mb-4 text-center">Upcoming Events</h2>
+<a href="{% url 'payment' %}" target="_blank"
+   style="
+       position: absolute;  /* will scroll with the page */
+       top: 80px;           /* distance from top of container */
+       right: 20px;         /* distance from right */
+       z-index: 1050;
+   ">
     <img src="{% static 'images/donate.png' %}" alt="Donate"
-         style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.2s;">
+         style="
+             width: 100px;
+             height: 100px;
+             border-radius: 50%;
+             object-fit: cover;
+             cursor: pointer;
+             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+             transition: transform 0.2s;
+         ">
 </a>
 
-    {% if user.is_staff %}
-        <div class="text-center mb-4">
-            <a href="{% url 'add_event' %}" class="btn btn-success btn-custom">Add Event</a>
-        </div>
-    {% endif %}
-
-    <div class="list-group">
-        {% for event in events %}
-        <div class="list-group-item mb-3 p-3">
-
-            <!-- ✅ EVENT IMAGE ADDED -->
-            <div class="text-center mb-3">
-                <img src="{% static 'images/event.png' %}" alt="{{ event.title }}"  style="max-height: 250px; object-fit: cover;" class="img-fluid rounded" >
-            </div>
-
-
-            <h4 class="display-4 text-center">{{ event.title }}</h4>
-            <p class="fs-4 text-center">{{ event.description }}</p>
-
-            <p class="text-info fs-5 text-center">
-                <strong>Date:</strong> {{ event.date }}
-            </p>
-
-            <!-- ✅ NEW LOCATION SHOWN -->
-            <p class="text-warning fs-5 text-center">
-                <strong>Location:</strong> {{ event.location }}
-            </p>
-
-            <div class="text-center mt-3">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'event_payment' event.id %}" class="btn btn-success btn-custom">Attend</a>
-                {% else %}
-                    <a href="{% url 'register' %}?next={% url 'event_payment' event.id %}" class="btn btn-success btn-custom">Attend</a>
-                {% endif %}
-            </div>
 
             {% if user.is_staff %}
-                <div class="d-flex gap-2 mt-2 justify-content-center">
-                    <a href="{% url 'edit_event' event.id %}" class="btn btn-primary btn-sm">Edit</a>
-                    <a href="{% url 'delete_event' event.id %}" class="btn btn-danger btn-sm">Delete</a>
+                <div class="text-center mb-4">
+                    <a href="{% url 'add_event' %}" class="btn btn-success btn-custom">Add Event</a>
                 </div>
             {% endif %}
+
+            <div class="list-group">
+                {% for event in events %}
+                    <div class="list-group-item mb-3 p-3">
+
+                        <div class="text-center mb-3">
+                            <<img src="{{ event.image.url }}" alt="{{ event.title }}" class="img-fluid rounded" style="max-height:250px; object-fit:cover;">
+
+                        </div>
+
+                        <h4 class="display-4 text-center">{{ event.title }}</h4>
+                        <p class="fs-4 text-center">{{ event.description }}</p>
+
+                        <p class="text-info fs-5 text-center">
+                            <strong>Date:</strong> {{ event.date }}
+                        </p>
+
+                        <p class="text-warning fs-5 text-center">
+                            <strong>Location:</strong> {{ event.location }}
+                        </p>
+
+                        <div class="text-center mt-3">
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'event_payment' event.id %}" class="btn btn-success btn-custom">Attend</a>
+                            {% else %}
+                                <a href="{% url 'register' %}?next={% url 'event_payment' event.id %}" class="btn btn-success btn-custom">Attend</a>
+                            {% endif %}
+                        </div>
+
+                        {% if user.is_staff %}
+                            <div class="d-flex gap-2 mt-2 justify-content-center">
+                                <a href="{% url 'edit_event' event.id %}" class="btn btn-primary btn-sm">Edit</a>
+                                <a href="{% url 'delete_event' event.id %}" class="btn btn-danger btn-sm">Delete</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% empty %}
+
+                    <p class="text-center">No events {{ selected_month_name }}</p>
+                {% endfor %}
+            </div>
         </div>
-        {% empty %}
-            <p class="text-center">No events yet.</p>
-        {% endfor %}
     </div>
 </div>
 {% endblock %}
-
-

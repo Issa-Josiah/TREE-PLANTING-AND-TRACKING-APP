@@ -7,15 +7,44 @@
 
 
 <a href="{% url 'payment' %}" target="_blank"
-   style="position: fixed; top: 80px; right: 20px; z-index: 1050;">
+   style="
+       position: absolute;  /* will scroll with the page */
+       top: 80px;           /* distance from top of container */
+       right: 20px;         /* distance from right */
+       z-index: 1050;
+   ">
     <img src="{% static 'images/donate.png' %}" alt="Donate"
-         style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.2s;">
+         style="
+             width: 100px;
+             height: 100px;
+             border-radius: 50%;
+             object-fit: cover;
+             cursor: pointer;
+             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+             transition: transform 0.2s;
+         ">
 </a>
+
  {% else %}
-<a href="{% url 'register' %}" target="_blank"
-   style="position: fixed; top: 80px; right: 20px; z-index: 1050;"><img src="{% static 'images/donate.png' %}" alt="Donate"
-         style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.2s;"></a>
-                {% endif %}
+<a href="{% url 'payment' %}" target="_blank"
+   style="
+       position: absolute;  /* will scroll with the page */
+       top: 80px;           /* distance from top of container */
+       right: 20px;         /* distance from right */
+       z-index: 1050;
+   ">
+    <img src="{% static 'images/donate.png' %}" alt="Donate"
+         style="
+             width: 100px;
+             height: 100px;
+             border-radius: 50%;
+             object-fit: cover;
+             cursor: pointer;
+             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+             transition: transform 0.2s;
+         ">
+</a>
+    {% endif %}
 
 <div class="container mt-5">
     <h2 class="text-center mb-4">📬 Contact Us</h2>

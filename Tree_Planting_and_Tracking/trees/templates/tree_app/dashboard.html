@@ -7,48 +7,6 @@
 
 <!-- ===== Welcome Section ===== -->
 
-<div class="container mt-5">
-    <div class="p-5 bg-success bg-opacity-10 rounded-4 shadow-lg text-center position-relative overflow-hidden
-                animate__animated animate__fadeIn animate__slow">
-
-        <!-- Decorative Leaf Icons -->
-        <div class="position-absolute top-50 start-0 translate-middle-y opacity-25"
-             style="font-size: 5rem; transform: rotate(-20deg);">
-            🌿
-        </div>
-        <div class="position-absolute top-50 end-0 translate-middle-y opacity-25"
-             style="font-size: 5rem; transform: rotate(20deg);">
-            🌿
-        </div>
-
-        <!-- Welcome Text -->
-        <h2 class="fw-bold text-success display-4 mb-3 animate__animated animate__fadeInDown animate__delay-1s">
-             &#128516;Welcome{% if user.is_authenticated %}, {{ user.username }}{% endif %}!&#9995;
-        </h2>
-
-        <!-- Stats -->
-
-        {% if user.is_authenticated %}
-        <p class="fs-5 mb-4 animate__animated animate__fadeIn animate__delay-3s">
-            Your Trees: <strong>{{ user_total }}</strong>
-        </p>
-
-        <!-- Add Tree Button -->
-        <a href="{% url 'add_tree' %}" class="btn btn-success btn-lg rounded-pill shadow px-4 py-2 fs-5 animate__animated animate__zoomIn animate__delay-4s">
-            🌿 Plant Tree
-        </a>
-        {% else %}
-        <!-- Login/Register Buttons -->
-        <p class="fs-6 mt-3 animate__animated animate__fadeIn animate__delay-3s">
-            <a href="{% url 'login' %}" class="btn btn-primary btn-sm me-2 px-4">Login</a>
-            or
-            <a href="{% url 'register' %}" class="btn btn-secondary btn-sm ms-2 px-4">Register</a>
-            to plant your own trees!
-        </p>
-        {% endif %}
-    </div>
-</div>
-
 <div style="
     background-image: url('{% static 'images/img_4.png' %}');
     background-size: cover;
@@ -56,6 +14,7 @@
     background-repeat: no-repeat;
     padding: 30px;
 ">
+
 <!-- ===== Tree Carousel ===== -->
 
 <div id="treeCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000" style="height:75vh;">
@@ -97,6 +56,157 @@
 
 
 </div>
+
+
+<div class="container mt-5">
+    <div class="p-5 bg-success bg-opacity-10 rounded-4 shadow-lg text-center position-relative overflow-hidden
+                animate__animated animate__fadeIn animate__slow">
+
+        <!-- Decorative Leaf Icons -->
+        <div class="position-absolute top-50 start-0 translate-middle-y opacity-25"
+             style="font-size: 5rem; transform: rotate(-20deg);">
+            🌿
+        </div>
+        <div class="position-absolute top-50 end-0 translate-middle-y opacity-25"
+             style="font-size: 5rem; transform: rotate(20deg);">
+            🌿
+        </div>
+
+        <!-- Welcome Text -->
+        <h2 class="fw-bold text-success display-4 mb-3 animate__animated animate__fadeInDown animate__delay-1s">
+             &#128516;Welcome{% if user.is_authenticated %}, {{ user.username }}{% endif %}!&#9995;
+        </h2>
+
+        <!-- Stats -->
+
+        {% if user.is_authenticated %}
+        <p class="fs-5 mb-4 animate__animated animate__fadeIn animate__delay-3s">
+            Your Trees: <strong>{{ user_total }}</strong>
+        </p>
+
+        <!-- Add Tree Button -->
+        <a href="{% url 'add_tree' %}" class="btn btn-success btn-lg rounded-pill shadow px-4 py-2 fs-5 animate__animated animate__zoomIn animate__delay-4s">
+            🌿 Plant Tree
+        </a>
+        {% else %}
+        <!-- Login/Register Buttons -->
+        <p class="fs-6 mt-3 animate__animated animate__fadeIn animate__delay-3s">
+            <a href="{% url 'login' %}" class="btn btn-primary btn-sm me-2 px-4">Login</a>
+            or
+            <a href="{% url 'register' %}" class="btn btn-secondary btn-sm ms-2 px-4">Register</a>
+            to plant your own trees!
+        </p>
+        {% endif %}
+    </div>
+</div>
+<!-- peoples information -->
+<div class="container my-1">
+
+    <!-- Grow -->
+    <div class="row align-items-center p-4 mb-5 bg-white rounded-4 shadow-sm gx-4">
+
+        <div class="col-md-5">
+            <img src="{% static 'images/grow.png' %}" class="img-fluid rounded-3" alt="Grow">
+        </div>
+
+        <!-- Vertical divider -->
+        <div class="col-md-1 d-none d-md-flex justify-content-center">
+            <div class="w-100 h-100 bg-secondary bg-opacity-25"></div>
+        </div>
+
+        <div class="col-md-6">
+            <h3 class="fw-bold text-primary">Grow</h3>
+            <p class="text-secondary">
+                Growth blooms when we come together sharing ideas, supporting each other, and working as one. Every small effort adds up, helping teams, communities, and dreams thrive.
+                Let’s nurture potential, celebrate progress, and keep reaching higher.
+            </p>
+            {% if not user.is_authenticated %}
+            <a href="{% url 'register' %}" class="btn btn-light btn-lg fw-bold shadow-sm">
+                Register
+            </a>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!-- Plant -->
+    <div class="row align-items-center p-4 mb-5 bg-white rounded-4 shadow-sm flex-md-row-reverse gx-4">
+
+        <div class="col-md-5">
+            <img src="{% static 'images/plant.png' %}" class="img-fluid rounded-3" alt="Plant">
+        </div>
+
+        <!-- Vertical divider -->
+        <div class="col-md-1 d-none d-md-flex justify-content-center">
+            <div class="w-100 h-100 bg-secondary bg-opacity-25"></div>
+        </div>
+
+        <div class="col-md-6">
+            <h3 class="fw-bold text-info">Plant</h3>
+            <p class="text-secondary">
+                Every tree begins with a single seed, and every change begins with a single action. When we take steps together—nurturing, planting, and caring—we create a ripple that grows far beyond ourselves.
+            </p>
+            <a href="{% url 'login' %}" class="btn btn-light btn-lg fw-bold shadow-sm">
+                Let’s plant. >>🌱
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Team -->
+    <div class="row align-items-center p-4 mb-5 bg-white rounded-4 shadow-sm gx-4">
+
+        <div class="col-md-5">
+            <img src="{% static 'images/team.png' %}" class="img-fluid rounded-3" alt="Team">
+        </div>
+
+        <!-- Vertical divider -->
+        <div class="col-md-1 d-none d-md-flex justify-content-center">
+            <div class="w-100 h-100 bg-secondary bg-opacity-25"></div>
+        </div>
+
+        <div class="col-md-6">
+            <h3 class="fw-bold text-warning">Team</h3>
+            <p class="text-secondary">
+                Planting as a team is more than digging soil—it’s collaboration in action. Together, we share ideas, support each other, and turn effort into growth.
+                Healthy competition pushes everyone to give their best, while teamwork turns challenges into wins.
+                Every seed we plant symbolizes unity, responsibility, and shared success.
+                Grab your team, plant together, and grow not just plants, but bonds.
+            </p>
+            <a href="{% url 'leaderboard' %}" class="btn btn-light btn-lg fw-bold shadow-sm">
+                See Leaderboard <img src="{% static 'images/img_5.png' %}" alt="Icon" style="height:24px; width:24px; margin-right:8px;">
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Support -->
+    <div class="row align-items-center p-4 mb-5 bg-white rounded-4 shadow-sm flex-md-row-reverse gx-4">
+
+        <div class="col-md-5">
+            <img src="{% static 'images/woman.png' %}" class="img-fluid rounded-3" alt="Woman">
+        </div>
+
+        <!-- Vertical divider -->
+        <div class="col-md-1 d-none d-md-flex justify-content-center">
+            <div class="w-100 h-100 bg-secondary bg-opacity-25"></div>
+        </div>
+
+        <div class="col-md-6">
+            <h3 class="fw-bold text-success">Support</h3>
+            <p class="text-secondary">
+                Charity begins at home, and our home is Earth. Help us plant trees and protect our planet. Your support can make the world greener and brighter. Donate today and grow a sustainable future with us!
+            </p>
+            <a href="{% url 'payment' %}" class="btn btn-light btn-lg fw-bold shadow-sm">
+                Support Us>> <img src="{% static 'images/img_7.png' %}" alt="Icon" style="height:24px; width:24px; margin-right:8px;">
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+
 
 <!-- ===== Sponsors Carousel ===== -->
 <div class="container mt-5 mb-5">
