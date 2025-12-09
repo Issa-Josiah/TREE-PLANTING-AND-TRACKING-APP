@@ -2,27 +2,94 @@
 
 {% block content %}
 
-<form method="POST" action="">
+<form method="POST" action="{% url 'payment' %}" class="p-4 bg-light rounded shadow-sm">
     {% csrf_token %}
-  <div class="mb-3">
 
-      <div class="mb-3">
+    <h4 class="mb-4">M-Pesa Payment</h4>
+
+    <div class="mb-3">
         <label for="name" class="form-label">Full Name</label>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
     </div>
 
-    <label for="phoneNumber" class="form-label">PHONE NUMBER</label>
-    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" >
-    <div id="phoneHelp" class="form-text">Please enter your phone number example 07******* </div>
-  </div>
-  <div class="mb-3">
-    <label for="amount" class="form-label">Amount</label>
-    <input type="text" class="form-control" id="amount" name="amount">
-  </div>
+    <div class="mb-3">
+        <label for="phoneNumber" class="form-label">Phone Number</label>
+        <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="07XXXXXXXX" required>
+    </div>
 
-  <button type="submit" class="btn btn-dark">PAY</button>
+    <div class="mb-3">
+        <label class="form-label">Payment Type</label>
+        <select id="paymentType" name="paymentType" class="form-select">
+            <option value="donate">Donate</option>
+            <option value="buy">Buy Tree</option>
+        </select>
+    </div>
+
+    <!-- Tree selection, only visible when buying -->
+    <div class="mb-3 d-none" id="treeSection">
+        <label class="form-label">Select Tree</label>
+        <select id="treeSelect" name="tree" class="form-select">
+            <option value="">-- Choose Tree --</option>
+            {% for tree in trees %}
+                <option value="{{ tree.id }}" data-price="{{ tree.price }}">
+                    {{ tree.name }} — KES {{ tree.price }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Quantity, only visible when buying -->
+    <div class="mb-3 d-none" id="quantitySection">
+        <label class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" min="1" value="1">
+    </div>
+
+    <div class="mb-3">
+        <label for="amount" class="form-label">Amount (KES)</label>
+        <input type="text" class="form-control" id="amount" name="amount" required>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">PAY</button>
 </form>
 
+<script>
+const paymentType = document.getElementById("paymentType");
+const treeSection = document.getElementById("treeSection");
+const quantitySection = document.getElementById("quantitySection");
+const treeSelect = document.getElementById("treeSelect");
+const quantityInput = document.getElementById("quantity");
+const amountInput = document.getElementById("amount");
+
+function updateAmount() {
+    if(paymentType.value === "buy") {
+        const price = parseFloat(treeSelect.selectedOptions[0].dataset.price) || 0;
+        const qty = parseInt(quantityInput.value) || 1;
+        amountInput.value = price * qty;
+        amountInput.readOnly = true;
+    } else {
+        amountInput.readOnly = false;
+    }
+}
+
+// Show/hide tree and quantity sections based on payment type
+paymentType.addEventListener("change", function() {
+    if(this.value === "buy") {
+        treeSection.classList.remove("d-none");
+        quantitySection.classList.remove("d-none");
+    } else {
+        treeSection.classList.add("d-none");
+        quantitySection.classList.add("d-none");
+        amountInput.value = "";
+    }
+    updateAmount();
+});
+
+// Update amount when tree or quantity changes
+treeSelect.addEventListener("change", updateAmount);
+quantityInput.addEventListener("input", updateAmount);
+
+// Initialize amount
+updateAmount();
+</script>
+
 {% endblock %}
-
-

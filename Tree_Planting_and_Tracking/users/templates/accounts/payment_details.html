@@ -1,0 +1,38 @@
+{% extends 'home_without_footer.html' %}
+
+{% block content %}
+
+<h3 class="mb-3">All Payments</h3>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Payment Type</th>
+            <th>Tree</th>
+            <th>Quantity</th>
+            <th>Amount (KES)</th>
+            <th>Phone Number</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for payment in payments %}
+        <tr>
+            <td>{{ payment.user.username }}</td>
+            <td>{{ payment.get_payment_type_display }}</td>
+            <td>{{ payment.tree.name if payment.tree else "-" }}</td>
+            <td>{{ payment.quantity }}</td>
+            <td>{{ payment.amount }}</td>
+            <td>{{ payment.phone_number }}</td>
+            <td>{{ payment.date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7" class="text-center">No payments yet</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

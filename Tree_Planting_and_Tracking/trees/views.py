@@ -15,6 +15,8 @@ from .forms import TreeForm
 from .forms import TreeAdminForm
 from sponsors.models import Sponsor
 from event.models import Event
+from sponsors.models import Payment
+from .models import Contact
 
 
 
@@ -193,6 +195,11 @@ def contact(request):
         email = request.POST.get('email')
         message_content = request.POST.get('message')
 
+        Contact.objects.create(
+            name=name,
+            email=email,
+            message=message_content
+        )
         # Send email
         send_mail(
             subject=f"Contact Us Message from {name}",
@@ -215,7 +222,12 @@ def admina_dashboard(request):
     users = User.objects.all()
     trees = Tree.objects.all()
     events = Event.objects.all().order_by('date')
+    payments = Payment.objects.all().order_by('-date')
+    contacts = Contact.objects.all().order_by('-created_at')
+
     context = {'users': users,
                'trees': trees,
-               'events': events}
+               'events': events,
+               'payments': payments,
+               'contacts': contacts,  }
     return render(request, 'tree_app/admin_dashboard.html', context)

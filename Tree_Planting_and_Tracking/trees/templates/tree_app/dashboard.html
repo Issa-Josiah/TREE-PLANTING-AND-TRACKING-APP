@@ -27,9 +27,7 @@
         </h2>
 
         <!-- Stats -->
-        <p class="fs-5 mb-2 animate__animated animate__fadeIn animate__delay-2s">
-            Total Trees Planted: <strong>{{ total_trees }}</strong>
-        </p>
+
         {% if user.is_authenticated %}
         <p class="fs-5 mb-4 animate__animated animate__fadeIn animate__delay-3s">
             Your Trees: <strong>{{ user_total }}</strong>
@@ -37,7 +35,7 @@
 
         <!-- Add Tree Button -->
         <a href="{% url 'add_tree' %}" class="btn btn-success btn-lg rounded-pill shadow px-4 py-2 fs-5 animate__animated animate__zoomIn animate__delay-4s">
-            🌿 Add New Tree
+            🌿 Plant Tree
         </a>
         {% else %}
         <!-- Login/Register Buttons -->
