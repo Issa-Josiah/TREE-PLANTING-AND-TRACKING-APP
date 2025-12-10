@@ -1,0 +1,11 @@
+<!-- admin_edit_user.html -->
+{% extends 'home.html' %}
+{% block content %}
+<div class="container py-5 w-50">
+    <h3>Edit User</h3>
+    <form method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-success">Save Changes</button>
+    </form>
+</div>
+{% endblock %}

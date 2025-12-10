@@ -231,3 +231,6 @@ def admina_dashboard(request):
                'payments': payments,
                'contacts': contacts,  }
     return render(request, 'tree_app/admin_dashboard.html', context)
+
+
+

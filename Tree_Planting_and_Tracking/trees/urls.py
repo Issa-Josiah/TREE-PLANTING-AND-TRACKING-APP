@@ -28,6 +28,7 @@ path('tree/<int:id>/admin-edit/', views.admin_edit_tree, name='admin_edit_tree')
 path('dashboard/', views.admina_dashboard, name='admina_dashboard'),
 path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+
 ]
 
 
