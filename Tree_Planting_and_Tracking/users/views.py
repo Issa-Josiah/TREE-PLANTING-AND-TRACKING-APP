@@ -86,8 +86,10 @@ def index(request):
 
 def mpesaPayement(request):
     trees = Tree.objects.all()
+    user_name = request.user.get_full_name() or request.user.username if request.user.is_authenticated else ""
 
     if request.method == "POST":
+
         payment_type = request.POST.get("paymentType")
         tree_id = request.POST.get("tree")
         quantity = request.POST.get("quantity")
@@ -118,9 +120,11 @@ def mpesaPayement(request):
             callback_url="https://api.darajambili.com/express-payment"
         )
 
+        user = request.user if request.user.is_authenticated else None
+
         # Save payment
         Payment.objects.create(
-            user=request.user,
+            user=user,
             payment_type=payment_type,
             tree=tree if tree else None,
             quantity=quantity if tree else 1,

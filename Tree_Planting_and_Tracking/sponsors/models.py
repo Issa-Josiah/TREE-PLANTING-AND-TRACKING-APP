@@ -18,7 +18,7 @@ class Payment(models.Model):
         ("buy", "Buy Tree"),
     )
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     payment_type = models.CharField(max_length=20, choices=PAYMENT_TYPES)
     tree = models.ForeignKey(Tree, on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
