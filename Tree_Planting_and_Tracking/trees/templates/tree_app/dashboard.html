@@ -146,9 +146,15 @@
             <p class="text-secondary">
                 Every tree begins with a single seed, and every change begins with a single action. When we take steps together—nurturing, planting, and caring—we create a ripple that grows far beyond ourselves.
             </p>
-            <a href="{% url 'login' %}" class="btn btn-light btn-lg fw-bold shadow-sm">
+            {% if user.is_authenticated %}
+            <a href="{% url 'add_tree' %}" class="btn btn-light btn-lg fw-bold shadow-sm">
+                Let’s plant. >>🌱</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-light btn-lg fw-bold shadow-sm">
                 Let’s plant. >>🌱
             </a>
+                {% endif %}
+
         </div>
 
     </div>

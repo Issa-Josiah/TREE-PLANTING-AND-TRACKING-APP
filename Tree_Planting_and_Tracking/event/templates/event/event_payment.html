@@ -11,7 +11,9 @@
         <div class="card-body bg-light p-5">
             <h2 class="mb-5 display-5">Pay to Attend: {{ event.title }}</h2>
             <p class="lead">The event will be held in <span class="fw-bold">{{ event.location }}</span></p>
-            <p class="lead">Your support aids in making the world better.</p>
+            <p class="lead text-secondary">Your support aids in making the world better.
+                </p>
+             <p class="lead text-dark"> So gear up and add that 100 shillings or more to drive the mission</p>
             <a href="{% url 'payment' %}" class="btn btn-primary btn-lg fw-bold mt-4" style="border-radius: 50px;">
                 DONATE TO SUPPORT
             </a>
