@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 
 class Tree(models.Model):
     name = models.CharField(max_length=200)
+    second_name = models.CharField(max_length=100, null=True, blank=True)
+
     description = models.TextField()
     image = models.ImageField(upload_to='trees/', default='images/logo.png')
 
